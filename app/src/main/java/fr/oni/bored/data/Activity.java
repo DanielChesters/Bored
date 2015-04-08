@@ -14,7 +14,7 @@ public class Activity {
     @DatabaseField
     private String description;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Category category;
 
     public Integer getId() {

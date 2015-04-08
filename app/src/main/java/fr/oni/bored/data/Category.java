@@ -1,8 +1,13 @@
 package fr.oni.bored.data;
 
+import com.j256.ormlite.dao.EagerForeignCollection;
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.dao.LazyForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.SQLException;
 import java.util.Set;
 
 
@@ -18,8 +23,8 @@ public class Category {
     @DatabaseField
     private String description;
 
-    @DatabaseField(foreign = true)
-    private Set<Activity> activities;
+    @ForeignCollectionField
+    private ForeignCollection<Activity> activities;
 
     public Integer getId() {
         return id;
@@ -45,11 +50,8 @@ public class Category {
         this.description = description;
     }
 
-    public Set<Activity> getActivities() {
+    public ForeignCollection<Activity> getActivities() {
         return activities;
     }
 
-    public void setActivities(Set<Activity> activities) {
-        this.activities = activities;
-    }
 }
