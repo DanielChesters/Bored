@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.robolectric'
 
 android {
     compileSdkVersion 22
@@ -24,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.0-rc2"
     compile 'com.android.support:support-annotations:22.0.0'
     compile 'com.jakewharton:butterknife:5.1.1'
