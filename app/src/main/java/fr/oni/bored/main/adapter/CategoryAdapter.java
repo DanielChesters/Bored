@@ -1,18 +1,27 @@
 package fr.oni.bored.main.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
+import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
@@ -27,7 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_category_row_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, this);
     }
 
     @Override
@@ -43,15 +52,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories.size();
     }
 
+    public List<Category> getCategories() {
+        return categories;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private Category category;
         @InjectView(R.id.main_categories_row_title)
         protected TextView titleView;
         @InjectView(R.id.main_categories_row_description)
         protected TextView descriptionView;
+        private CategoryAdapter adapter;
+        private Context context;
+        private Category category;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, CategoryAdapter categoryAdapter) {
             super(itemView);
+            this.context = itemView.getContext();
+            this.adapter = categoryAdapter;
             ButterKnife.inject(this, itemView);
         }
 
@@ -63,6 +80,33 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @OnClick(R.id.main_categories_row_edit_button)
         public void editCategory(View v) {
             Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_LONG).show();
+        }
+
+        @OnClick(R.id.main_categories_row_delete_button)
+        public void deleteCategory() {
+            AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
+            dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remvote this category?");
+            dialogBuild.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+                    try {
+                        Dao<fr.oni.bored.data.Category, Integer> categoriesDao = dbHelper.getCategoryDao();
+                        categoriesDao.deleteById(category.id);
+                        adapter.getCategories().remove(category);
+                        adapter.notifyDataSetChanged();
+                    } catch (SQLException e) {
+                        Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
+                    }
+                }
+            });
+            dialogBuild.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i(CategoryAdapter.class.getName(), "Remove canceled");
+                }
+            });
+            dialogBuild.create().show();
         }
 
         public TextView getTitleView() {

@@ -25,7 +25,18 @@
     <ImageView
         android:id="@+id/main_categories_row_edit_button"
         android:src="@android:drawable/ic_menu_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
         android:contentDescription="@string/edit_category"/>
+
+    <ImageView
+        android:id="@+id/main_categories_row_delete_button"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_gravity="center"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
+        android:contentDescription="@string/delete_category"/>
 </LinearLayout>
