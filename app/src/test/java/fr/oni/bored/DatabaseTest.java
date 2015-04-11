@@ -89,7 +89,7 @@ public class DatabaseTest {
         activity.setCategory(category);
 
         activityDao.create(activity);
-        
+
         Activity activityResult = activityDao.queryForId(activity.getId());
         Category categoryResult = categoryDao.queryForId(category.getId());
 

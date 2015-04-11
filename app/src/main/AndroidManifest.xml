@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fr.oni.bored.MainActivity" />
         </activity>
+        <activity
+            android:name=".SelectActivity"
+            android:label="@string/title_activity_select"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.oni.bored.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
