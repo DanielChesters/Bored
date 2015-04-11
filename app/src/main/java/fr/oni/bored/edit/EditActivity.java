@@ -1,24 +1,26 @@
-package fr.oni.bored;
+package fr.oni.bored.edit;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fr.oni.bored.R;
 
-public class SelectActivity extends ActionBarActivity {
+
+public class EditActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
+        setContentView(R.layout.activity_edit);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
