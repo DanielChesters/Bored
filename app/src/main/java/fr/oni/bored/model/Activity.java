@@ -7,10 +7,10 @@ import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 @ParcelablePlease
 public class Activity implements Parcelable{
-    int id;
-    String title;
-    String description;
-    int categoryId;
+    public int id;
+    public String title;
+    public String description;
+    public int categoryId;
 
     public Activity() {
     }

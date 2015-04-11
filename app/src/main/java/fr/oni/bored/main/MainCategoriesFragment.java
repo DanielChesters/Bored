@@ -1,7 +1,7 @@
 package fr.oni.bored.main;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,10 +27,12 @@ import fr.oni.bored.main.adapter.CategoryAdapter;
 
 public class MainCategoriesFragment extends Fragment {
 
-    @InjectView(R.id.main_categories_recyclerView) protected RecyclerView recyclerView;
+    @InjectView(R.id.main_categories_recyclerView)
+    protected RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<fr.oni.bored.model.Category> categories;
     private CategoryAdapter adapter;
+    private OnViewCategoriesInteractionListener listener;
 
     public MainCategoriesFragment() throws SQLException {
         Log.d(this.getClass().getName(), "MainCategoriesFragment new instance begin");
@@ -40,7 +42,7 @@ public class MainCategoriesFragment extends Fragment {
             List<Category> data = categoriesDao.queryForAll();
             Bundle b = new Bundle();
             ArrayList<fr.oni.bored.model.Category> categories = new ArrayList<>();
-            for(Category category : data) {
+            for (Category category : data) {
                 categories.add(new fr.oni.bored.model.Category(category));
             }
             b.putParcelableArrayList("CATEGORIES", categories);
@@ -66,11 +68,27 @@ public class MainCategoriesFragment extends Fragment {
         ButterKnife.inject(this, view);
 
         layoutManager = new LinearLayoutManager(getActivity());
-        adapter = new CategoryAdapter(categories);
+        adapter = new CategoryAdapter(categories, listener);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
         Log.d(this.getClass().getName(), "onCreateView end");
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            this.listener = (OnViewCategoriesInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnViewCategoriesInteractionListener");
+        }
+    }
+
+    public interface OnViewCategoriesInteractionListener {
+        void onEditCategory(fr.oni.bored.model.Category category);
+
+        void onViewActivities(fr.oni.bored.model.Category category);
     }
 }

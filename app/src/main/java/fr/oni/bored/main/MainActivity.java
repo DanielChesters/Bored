@@ -2,6 +2,7 @@ package fr.oni.bored.main;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -15,11 +16,12 @@ import java.sql.SQLException;
 
 import fr.oni.bored.BuildConfig;
 import fr.oni.bored.R;
+import fr.oni.bored.data.Activity;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements MainCategoriesFragment.OnViewCategoriesInteractionListener, MainActivitiesFragment.OnViewActivitiesInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,16 @@ public class MainActivity extends ActionBarActivity {
         Category category2 = new Category("Title 2", "Description 2");
         categoriesDao.create(category1);
         categoriesDao.create(category2);
+        Dao<Activity, Integer> activitiesDao = dbHelper.getActivityDao();
+        Activity activity1 = new Activity("Title 1", "Description 1", category1);
+        Activity activity2 = new Activity("Title 2", "Description 2", category1);
+        Activity activity3 = new Activity("Title 3", "Description 3", category2);
+        Activity activity4 = new Activity("Title 4", "Description 4", category2);
+        activitiesDao.create(activity1);
+        activitiesDao.create(activity2);
+        activitiesDao.create(activity3);
+        activitiesDao.create(activity4);
+
     }
 
 
@@ -82,5 +94,31 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onEditCategory(fr.oni.bored.model.Category category) {
+
+    }
+
+    @Override
+    public void onViewActivities(fr.oni.bored.model.Category category) {
+        Log.d(this.getClass().getName(), "onViewActivities begin");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        MainActivitiesFragment fragment = MainActivitiesFragment.newInstance(category);
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        Log.d(this.getClass().getName(), "onViewActivities end");
+    }
+
+    @Override
+    public void onEditActivity(fr.oni.bored.model.Activity activity) {
+
+    }
+
+    @Override
+    public void onViewActivity(fr.oni.bored.model.Activity activity) {
+
     }
 }

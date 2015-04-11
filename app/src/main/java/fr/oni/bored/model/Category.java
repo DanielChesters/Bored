@@ -13,7 +13,7 @@ public class Category implements Parcelable{
     public int id;
     public String title;
     public String description;
-    List<Activity> activities;
+    public List<Activity> activities;
 
     public Category() {
     }

@@ -17,6 +17,16 @@ public class Activity {
     @DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
     private Category category;
 
+    public Activity() {
+
+    }
+
+    public Activity(String title, String description, Category category) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+    }
+
     public Integer getId() {
         return id;
     }

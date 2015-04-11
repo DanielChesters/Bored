@@ -22,14 +22,17 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
 import fr.oni.bored.data.DatabaseHelper;
+import fr.oni.bored.main.MainCategoriesFragment;
 import fr.oni.bored.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
+    private MainCategoriesFragment.OnViewCategoriesInteractionListener listener;
 
-    public CategoryAdapter(List<Category> categories) {
+    public CategoryAdapter(List<Category> categories, MainCategoriesFragment.OnViewCategoriesInteractionListener listener) {
         this.categories = categories;
+        this.listener = listener;
     }
 
     @Override
@@ -56,10 +59,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories;
     }
 
+    public MainCategoriesFragment.OnViewCategoriesInteractionListener getListener() {
+        return listener;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.main_categories_row_title)
+        @InjectView(R.id.main_category_row_title)
         protected TextView titleView;
-        @InjectView(R.id.main_categories_row_description)
+        @InjectView(R.id.main_category_row_description)
         protected TextView descriptionView;
         private CategoryAdapter adapter;
         private Context context;
@@ -72,17 +79,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             ButterKnife.inject(this, itemView);
         }
 
-        @OnClick(R.id.main_categories_row_text)
+        @OnClick(R.id.main_category_row_text)
         public void goToActivities(View v) {
+            adapter.getListener().onViewActivities(category);
             Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_LONG).show();
         }
 
-        @OnClick(R.id.main_categories_row_edit_button)
+        @OnClick(R.id.main_category_row_edit_button)
         public void editCategory(View v) {
+            adapter.getListener().onEditCategory(category);
             Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_LONG).show();
         }
 
-        @OnClick(R.id.main_categories_row_delete_button)
+        @OnClick(R.id.main_category_row_delete_button)
         public void deleteCategory() {
             AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
             dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remove this category?");
