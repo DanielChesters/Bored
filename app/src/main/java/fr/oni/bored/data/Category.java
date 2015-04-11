@@ -26,6 +26,14 @@ public class Category {
     @ForeignCollectionField
     private ForeignCollection<Activity> activities;
 
+    public Category() {
+    }
+
+    public Category(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     public Integer getId() {
         return id;
     }
