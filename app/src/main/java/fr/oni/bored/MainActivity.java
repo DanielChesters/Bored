@@ -1,4 +1,4 @@
-package fr.oni.bored.main;
+package fr.oni.bored;
 
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,14 +13,14 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
-import fr.oni.bored.BuildConfig;
-import fr.oni.bored.R;
 import fr.oni.bored.data.Activity;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
+import fr.oni.bored.view.ViewActivitiesFragment;
+import fr.oni.bored.view.ViewCategoriesFragment;
 
 
-public class MainActivity extends ActionBarActivity implements ViewCategoriesFragment.OnViewCategoriesInteractionListener, ViewActivitiesFragment.OnViewActivitiesInteractionListener{
+public class MainActivity extends ActionBarActivity implements ViewCategoriesFragment.OnViewCategoriesInteractionListener, ViewActivitiesFragment.OnViewActivitiesInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

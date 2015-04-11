@@ -1,4 +1,4 @@
-package fr.oni.bored.main.adapter;
+package fr.oni.bored.view.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,7 +22,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.main.ViewCategoriesFragment;
+import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {

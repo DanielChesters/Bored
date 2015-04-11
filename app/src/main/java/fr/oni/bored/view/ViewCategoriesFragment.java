@@ -1,4 +1,4 @@
-package fr.oni.bored.main;
+package fr.oni.bored.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import butterknife.InjectView;
 import fr.oni.bored.R;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.main.adapter.CategoryAdapter;
+import fr.oni.bored.view.adapter.CategoryAdapter;
 
 
 public class ViewCategoriesFragment extends Fragment {

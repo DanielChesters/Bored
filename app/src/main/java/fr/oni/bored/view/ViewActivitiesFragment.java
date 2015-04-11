@@ -1,4 +1,4 @@
-package fr.oni.bored.main;
+package fr.oni.bored.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.oni.bored.R;
-import fr.oni.bored.main.adapter.ActivityAdapter;
+import fr.oni.bored.view.adapter.ActivityAdapter;
 import fr.oni.bored.model.Category;
 
 public class ViewActivitiesFragment extends Fragment {

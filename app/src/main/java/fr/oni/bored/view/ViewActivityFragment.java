@@ -1,4 +1,4 @@
-package fr.oni.bored.main;
+package fr.oni.bored.view;
 
 import android.app.Activity;
 import android.net.Uri;
