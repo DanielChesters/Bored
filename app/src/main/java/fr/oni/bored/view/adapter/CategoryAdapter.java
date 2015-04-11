@@ -82,13 +82,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @OnClick(R.id.main_category_row_text)
         public void goToActivities(View v) {
             adapter.getListener().onViewActivities(category);
-            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.main_category_row_edit_button)
         public void editCategory(View v) {
             adapter.getListener().onEditCategory(category);
-            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.main_category_row_delete_button)
