@@ -1,14 +1,9 @@
 package fr.oni.bored.data;
 
-import com.j256.ormlite.dao.EagerForeignCollection;
 import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.dao.LazyForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.sql.SQLException;
-import java.util.Set;
 
 
 @DatabaseTable
@@ -61,5 +56,4 @@ public class Category {
     public ForeignCollection<Activity> getActivities() {
         return activities;
     }
-
 }

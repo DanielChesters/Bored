@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
-import fr.oni.bored.data.Category;
+import fr.oni.bored.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
@@ -34,8 +34,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category category = categories.get(position);
         holder.setCategory(category);
-        holder.getTitleView().setText(category.getTitle());
-        holder.getDescriptionView().setText(category.getDescription());
+        holder.getTitleView().setText(category.title);
+        holder.getDescriptionView().setText(category.description);
     }
 
     @Override
@@ -57,12 +57,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @OnClick(R.id.main_categories_row_text)
         public void goToActivities(View v) {
-            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.getId()), Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_LONG).show();
         }
 
         @OnClick(R.id.main_categories_row_edit_button)
         public void editCategory(View v) {
-            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.getId()), Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_LONG).show();
         }
 
         public TextView getTitleView() {
