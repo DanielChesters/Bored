@@ -85,7 +85,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @OnClick(R.id.main_categories_row_delete_button)
         public void deleteCategory() {
             AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
-            dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remvote this category?");
+            dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remove this category?");
             dialogBuild.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
