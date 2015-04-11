@@ -21,16 +21,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
-import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.main.MainActivitiesFragment;
+import fr.oni.bored.main.ViewActivitiesFragment;
 import fr.oni.bored.model.Activity;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
     private List<Activity> activities;
-    private MainActivitiesFragment.OnViewActivitiesInteractionListener listener;
+    private ViewActivitiesFragment.OnViewActivitiesInteractionListener listener;
 
-    public ActivityAdapter(List<Activity> activities, MainActivitiesFragment.OnViewActivitiesInteractionListener listener) {
+    public ActivityAdapter(List<Activity> activities, ViewActivitiesFragment.OnViewActivitiesInteractionListener listener) {
         this.activities = activities;
         this.listener = listener;
     }
@@ -59,7 +58,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         return activities;
     }
 
-    public MainActivitiesFragment.OnViewActivitiesInteractionListener getListener() {
+    public ViewActivitiesFragment.OnViewActivitiesInteractionListener getListener() {
         return listener;
     }
 

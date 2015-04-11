@@ -15,19 +15,19 @@ import fr.oni.bored.R;
 import fr.oni.bored.main.adapter.ActivityAdapter;
 import fr.oni.bored.model.Category;
 
-public class MainActivitiesFragment extends Fragment {
+public class ViewActivitiesFragment extends Fragment {
     private static final String ARG_CATEGORY = "category";
     @InjectView(R.id.view_activities_recyclerView)
     protected RecyclerView recyclerView;
     private Category category;
     private OnViewActivitiesInteractionListener listener;
 
-    public MainActivitiesFragment() {
+    public ViewActivitiesFragment() {
 
     }
 
-    public static MainActivitiesFragment newInstance(Category category) {
-        MainActivitiesFragment fragment = new MainActivitiesFragment();
+    public static ViewActivitiesFragment newInstance(Category category) {
+        ViewActivitiesFragment fragment = new ViewActivitiesFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_CATEGORY, category);
         fragment.setArguments(args);
@@ -45,7 +45,7 @@ public class MainActivitiesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_main_activities, container, false);
+        final View view = inflater.inflate(R.layout.fragment_view_activities, container, false);
         ButterKnife.inject(this, view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         ActivityAdapter adapter = new ActivityAdapter(category.activities, listener);

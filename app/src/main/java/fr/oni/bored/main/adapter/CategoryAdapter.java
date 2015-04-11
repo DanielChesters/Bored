@@ -22,15 +22,15 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.main.MainCategoriesFragment;
+import fr.oni.bored.main.ViewCategoriesFragment;
 import fr.oni.bored.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private MainCategoriesFragment.OnViewCategoriesInteractionListener listener;
+    private ViewCategoriesFragment.OnViewCategoriesInteractionListener listener;
 
-    public CategoryAdapter(List<Category> categories, MainCategoriesFragment.OnViewCategoriesInteractionListener listener) {
+    public CategoryAdapter(List<Category> categories, ViewCategoriesFragment.OnViewCategoriesInteractionListener listener) {
         this.categories = categories;
         this.listener = listener;
     }
@@ -38,7 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_category_row_item, parent, false);
+                .inflate(R.layout.view_category_row_item, parent, false);
         return new ViewHolder(v, this);
     }
 
@@ -59,7 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories;
     }
 
-    public MainCategoriesFragment.OnViewCategoriesInteractionListener getListener() {
+    public ViewCategoriesFragment.OnViewCategoriesInteractionListener getListener() {
         return listener;
     }
 

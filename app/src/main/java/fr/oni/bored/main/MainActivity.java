@@ -2,7 +2,6 @@ package fr.oni.bored.main;
 
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -21,7 +20,7 @@ import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
 
 
-public class MainActivity extends ActionBarActivity implements MainCategoriesFragment.OnViewCategoriesInteractionListener, MainActivitiesFragment.OnViewActivitiesInteractionListener{
+public class MainActivity extends ActionBarActivity implements ViewCategoriesFragment.OnViewCategoriesInteractionListener, ViewActivitiesFragment.OnViewActivitiesInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +41,9 @@ public class MainActivity extends ActionBarActivity implements MainCategoriesFra
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            MainCategoriesFragment fragment = null;
+            ViewCategoriesFragment fragment = null;
             try {
-                fragment = new MainCategoriesFragment();
+                fragment = new ViewCategoriesFragment();
             } catch (SQLException e) {
                 Log.e(this.getClass().getName(), e.getMessage(), e);
             }
@@ -105,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements MainCategoriesFra
     public void onViewActivities(fr.oni.bored.model.Category category) {
         Log.d(this.getClass().getName(), "onViewActivities begin");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        MainActivitiesFragment fragment = MainActivitiesFragment.newInstance(category);
+        ViewActivitiesFragment fragment = ViewActivitiesFragment.newInstance(category);
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

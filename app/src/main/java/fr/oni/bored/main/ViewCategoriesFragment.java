@@ -25,7 +25,7 @@ import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.main.adapter.CategoryAdapter;
 
 
-public class MainCategoriesFragment extends Fragment {
+public class ViewCategoriesFragment extends Fragment {
 
     @InjectView(R.id.main_categories_recyclerView)
     protected RecyclerView recyclerView;
@@ -34,8 +34,8 @@ public class MainCategoriesFragment extends Fragment {
     private CategoryAdapter adapter;
     private OnViewCategoriesInteractionListener listener;
 
-    public MainCategoriesFragment() throws SQLException {
-        Log.d(this.getClass().getName(), "MainCategoriesFragment new instance begin");
+    public ViewCategoriesFragment() throws SQLException {
+        Log.d(this.getClass().getName(), "ViewCategoriesFragment new instance begin");
         if (categories == null) {
             DatabaseHelper dbHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
             Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
@@ -48,7 +48,7 @@ public class MainCategoriesFragment extends Fragment {
             b.putParcelableArrayList("CATEGORIES", categories);
             setArguments(b);
         }
-        Log.d(this.getClass().getName(), "MainCategoriesFragment new instance end");
+        Log.d(this.getClass().getName(), "ViewCategoriesFragment new instance end");
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MainCategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreateView begin");
-        final View view = inflater.inflate(R.layout.fragment_main_categories, container, false);
+        final View view = inflater.inflate(R.layout.fragment_view_categories, container, false);
         ButterKnife.inject(this, view);
 
         layoutManager = new LinearLayoutManager(getActivity());
