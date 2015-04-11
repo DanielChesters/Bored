@@ -1,6 +1,7 @@
 package fr.oni.bored.main;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
+import fr.oni.bored.BuildConfig;
 import fr.oni.bored.R;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
@@ -23,6 +25,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreate begin");
         super.onCreate(savedInstanceState);
+
+        if(BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+        }
 
         try {
             createSampleCategories();
