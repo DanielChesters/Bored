@@ -64,9 +64,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.main_category_row_title)
+        @InjectView(R.id.view_category_row_title)
         protected TextView titleView;
-        @InjectView(R.id.main_category_row_description)
+        @InjectView(R.id.view_category_row_description)
         protected TextView descriptionView;
         private CategoryAdapter adapter;
         private Context context;
@@ -79,19 +79,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             ButterKnife.inject(this, itemView);
         }
 
-        @OnClick(R.id.main_category_row_text)
+        @OnClick(R.id.view_category_row_text)
         public void goToActivities(View v) {
             adapter.getListener().onViewActivities(category);
             Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_SHORT).show();
         }
 
-        @OnClick(R.id.main_category_row_edit_button)
+        @OnClick(R.id.view_category_row_edit_button)
         public void editCategory(View v) {
             adapter.getListener().onEditCategory(category);
             Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_SHORT).show();
         }
 
-        @OnClick(R.id.main_category_row_delete_button)
+        @OnClick(R.id.view_category_row_delete_button)
         public void deleteCategory() {
             AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
             dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remove this category?");
