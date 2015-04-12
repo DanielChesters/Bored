@@ -51,7 +51,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return activities != null ? activities.size() : 0;
+        return activities == null ? 0 : activities.size();
     }
 
     public List<Activity> getActivities() {
