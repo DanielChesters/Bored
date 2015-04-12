@@ -39,52 +39,52 @@ public class DatabaseTest {
     @Test
     @SmallTest
     public void insertAnActivity() throws SQLException {
-        Activity activity = createActivity(1);
+        Activity activity = TestUtils.createActivity(1);
         activityDao.create(activity);
 
         Activity activityResult = activityDao.queryForId(activity.getId());
-        compareActivity(activity, activityResult);
+        TestUtils.compareActivity(activity, activityResult);
     }
 
     @Test
     @SmallTest
     public void insertACategory() throws SQLException {
-        Category category = createCategory(1);
+        Category category = TestUtils.createCategory(1);
         categoryDao.create(category);
 
         Category categoryResult = categoryDao.queryForId(category.getId());
-        compareCategory(category, categoryResult);
+        TestUtils.compareCategory(category, categoryResult);
     }
 
     @Test
     @SmallTest
     public void updateAnActivity() throws SQLException {
-        Activity activity = createActivity(1);
+        Activity activity = TestUtils.createActivity(1);
         activityDao.create(activity);
         activity.setDescription("Nope");
         activityDao.update(activity);
 
         Activity activityResult = activityDao.queryForId(activity.getId());
-        compareActivity(activity, activityResult);
+        TestUtils.compareActivity(activity, activityResult);
     }
 
     @Test
     @SmallTest
     public void updateACategory() throws SQLException {
-        Category category = createCategory(1);
+        Category category = TestUtils.createCategory(1);
         categoryDao.create(category);
         category.setDescription("Nope");
         categoryDao.update(category);
 
         Category categoryResult = categoryDao.queryForId(category.getId());
-        compareCategory(category, categoryResult);
+        TestUtils.compareCategory(category, categoryResult);
     }
 
     @Test
     @SmallTest
     public void insertAnActivityAndACategory() throws SQLException {
-        Category category = createCategory(1);
-        Activity activity = createActivity(1);
+        Category category = TestUtils.createCategory(1);
+        Activity activity = TestUtils.createActivity(1);
 
         activity.setCategory(category);
 
@@ -93,19 +93,19 @@ public class DatabaseTest {
         Activity activityResult = activityDao.queryForId(activity.getId());
         Category categoryResult = categoryDao.queryForId(category.getId());
 
-        compareActivity(activity, activityResult);
-        compareCategory(category, categoryResult);
+        TestUtils.compareActivity(activity, activityResult);
+        TestUtils.compareCategory(category, categoryResult);
 
-        compareCategory(category, activityResult.getCategory());
+        TestUtils.compareCategory(category, activityResult.getCategory());
         Assert.assertEquals(1, categoryResult.getActivities().size());
     }
 
     @Test
     @SmallTest
     public void insertTwoActivitiesAndACategory() throws SQLException {
-        Category category = createCategory(1);
-        Activity activity1 = createActivity(1);
-        Activity activity2 = createActivity(2);
+        Category category = TestUtils.createCategory(1);
+        Activity activity1 = TestUtils.createActivity(1);
+        Activity activity2 = TestUtils.createActivity(2);
 
         activity1.setCategory(category);
         activity2.setCategory(category);
@@ -117,43 +117,22 @@ public class DatabaseTest {
         Activity activity2Result = activityDao.queryForId(activity2.getId());
         Category categoryResult = categoryDao.queryForId(category.getId());
 
-        compareActivity(activity1, activity1Result);
-        compareActivity(activity2, activity2Result);
-        compareCategory(category, categoryResult);
+        TestUtils.compareActivity(activity1, activity1Result);
+        TestUtils.compareActivity(activity2, activity2Result);
+        TestUtils.compareCategory(category, categoryResult);
 
-        compareCategory(category, activity1Result.getCategory());
-        compareCategory(category, activity2Result.getCategory());
+        TestUtils.compareCategory(category, activity1Result.getCategory());
+        TestUtils.compareCategory(category, activity2Result.getCategory());
         Assert.assertEquals(2, categoryResult.getActivities().size());
     }
 
     @After
     public void tearDown() throws Exception {
         OpenHelperManager.releaseHelper();
+        dbHelper = null;
+        activityDao = null;
+        categoryDao = null;
     }
 
-    private void compareActivity(Activity activity, Activity activityResult) {
-        Assert.assertEquals("ID not equal", activity.getId(), activityResult.getId());
-        Assert.assertEquals("Title not equal", activity.getTitle(), activityResult.getTitle());
-        Assert.assertEquals("Description not equal", activity.getDescription(), activityResult.getDescription());
-    }
 
-    private void compareCategory(Category category, Category categoryResult) {
-        Assert.assertEquals("ID not equal", category.getId(), categoryResult.getId());
-        Assert.assertEquals("Title not equal", category.getTitle(), categoryResult.getTitle());
-        Assert.assertEquals("Description not equal", category.getDescription(), categoryResult.getDescription());
-    }
-
-    private Category createCategory(int i) {
-        Category category = new Category();
-        category.setTitle(String.format("Title %d", i));
-        category.setDescription(String.format("Description %d", i));
-        return category;
-    }
-
-    private Activity createActivity(int i) {
-        Activity activity = new Activity();
-        activity.setTitle(String.format("Title %d", i));
-        activity.setDescription(String.format("Description %d", i));
-        return activity;
-    }
 }

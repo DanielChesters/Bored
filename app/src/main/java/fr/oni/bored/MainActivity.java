@@ -78,15 +78,15 @@ public class MainActivity extends ActionBarActivity
     private void createSampleCategories() throws SQLException {
         DatabaseHelper dbHelper = OpenHelperManager.getHelper(getApplicationContext(), DatabaseHelper.class);
         Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
-        Category category1 = new Category("Title 1", "Description 1");
-        Category category2 = new Category("Title 2", "Description 2");
+        Category category1 = new Category("Category 1", "Description 1");
+        Category category2 = new Category("Category 2", "Description 2");
         categoriesDao.create(category1);
         categoriesDao.create(category2);
         Dao<Activity, Integer> activitiesDao = dbHelper.getActivityDao();
-        Activity activity1 = new Activity("Title 1", "Description 1", category1);
-        Activity activity2 = new Activity("Title 2", "Description 2", category1);
-        Activity activity3 = new Activity("Title 3", "Description 3", category2);
-        Activity activity4 = new Activity("Title 4", "Description 4", category2);
+        Activity activity1 = new Activity("Activity 1", "Description 1", category1);
+        Activity activity2 = new Activity("Activity 2", "Description 2", category1);
+        Activity activity3 = new Activity("Activity 3", "Description 3", category2);
+        Activity activity4 = new Activity("Activity 4", "Description 4", category2);
         activitiesDao.create(activity1);
         activitiesDao.create(activity2);
         activitiesDao.create(activity3);
