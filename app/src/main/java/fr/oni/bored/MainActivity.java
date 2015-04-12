@@ -12,6 +12,8 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.oni.bored.data.Activity;
 import fr.oni.bored.data.Category;
@@ -19,6 +21,7 @@ import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.view.ViewActivityFragment;
 import fr.oni.bored.view.ViewCategoriesFragment;
+import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 
 
 public class MainActivity extends ActionBarActivity
@@ -44,17 +47,30 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ViewCategoriesFragment fragment = null;
+            ArrayList<fr.oni.bored.model.Category> categories = null;
             try {
-                fragment = new ViewCategoriesFragment();
+                categories = getCategories();
             } catch (SQLException e) {
                 Log.e(this.getClass().getName(), e.getMessage(), e);
             }
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
+                    .build();
             transaction.replace(R.id.main_fragment, fragment);
             transaction.commit();
         }
         Log.d(this.getClass().getName(), "onCreate end");
+    }
+
+    private ArrayList<fr.oni.bored.model.Category> getCategories() throws SQLException{
+        DatabaseHelper dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+        Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
+        List<Category> data = categoriesDao.queryForAll();
+        ArrayList<fr.oni.bored.model.Category> categories = new ArrayList<>();
+        for (Category category : data) {
+            categories.add(new fr.oni.bored.model.Category(category));
+        }
+        return categories;
     }
 
     private void createSampleCategories() throws SQLException {
