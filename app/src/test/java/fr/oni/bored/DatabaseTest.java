@@ -24,9 +24,9 @@ import fr.oni.bored.data.DatabaseHelper;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, emulateSdk = 21)
 public class DatabaseTest {
-    private DatabaseHelper dbHelper;
-    private Dao<Activity, Integer> activityDao;
-    private Dao<Category, Integer> categoryDao;
+    private static DatabaseHelper dbHelper;
+    private static Dao<Activity, Integer> activityDao;
+    private static Dao<Category, Integer> categoryDao;
 
     @Before
     public void setUp() throws Exception {
@@ -34,6 +34,14 @@ public class DatabaseTest {
         dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
         activityDao = dbHelper.getDao(Activity.class);
         categoryDao = dbHelper.getDao(Category.class);
+    }
+
+    @After
+    public void afterAllTests() {
+        OpenHelperManager.releaseHelper();
+        dbHelper = null;
+        activityDao = null;
+        categoryDao = null;
     }
 
     @Test
@@ -125,14 +133,5 @@ public class DatabaseTest {
         TestUtils.compareCategory(category, activity2Result.getCategory());
         Assert.assertEquals(2, categoryResult.getActivities().size());
     }
-
-    @After
-    public void tearDown() throws Exception {
-        OpenHelperManager.releaseHelper();
-        dbHelper = null;
-        activityDao = null;
-        categoryDao = null;
-    }
-
 
 }

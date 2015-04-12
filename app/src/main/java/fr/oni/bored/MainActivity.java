@@ -31,6 +31,17 @@ public class MainActivity extends ActionBarActivity
         ViewActivitiesFragment.OnViewActivitiesInteractionListener,
         ViewActivityFragment.OnViewActivityInteractionListener {
 
+    private DatabaseHelper dbHelper;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            OpenHelperManager.releaseHelper();
+            dbHelper = null;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreate begin");
@@ -65,8 +76,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private ArrayList<fr.oni.bored.model.Category> getCategories() throws SQLException {
-        DatabaseHelper dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-        Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
+        Dao<Category, Integer> categoriesDao = getDbHelper().getCategoryDao();
         List<Category> data = categoriesDao.queryForAll();
         ArrayList<fr.oni.bored.model.Category> categories = new ArrayList<>();
         for (Category category : data) {
@@ -76,13 +86,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void createSampleCategories() throws SQLException {
-        DatabaseHelper dbHelper = OpenHelperManager.getHelper(getApplicationContext(), DatabaseHelper.class);
-        Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
+        Dao<Category, Integer> categoriesDao = getDbHelper().getCategoryDao();
         Category category1 = new Category("Category 1", "Description 1");
         Category category2 = new Category("Category 2", "Description 2");
         categoriesDao.create(category1);
         categoriesDao.create(category2);
-        Dao<Activity, Integer> activitiesDao = dbHelper.getActivityDao();
+        Dao<Activity, Integer> activitiesDao = getDbHelper().getActivityDao();
         Activity activity1 = new Activity("Activity 1", "Description 1", category1);
         Activity activity2 = new Activity("Activity 2", "Description 2", category1);
         Activity activity3 = new Activity("Activity 3", "Description 3", category2);
@@ -145,5 +154,12 @@ public class MainActivity extends ActionBarActivity
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public DatabaseHelper getDbHelper() {
+        if (dbHelper == null) {
+            dbHelper = new DatabaseHelper(getApplicationContext());
+        }
+        return dbHelper;
     }
 }

@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +23,7 @@ import fr.oni.bored.view.adapter.CategoryAdapter;
 @Config(constants = BuildConfig.class, emulateSdk = 21)
 public class ViewTest {
     MainActivity activity;
+
     @Before
     public void setUp() {
         activity = Robolectric.setupActivity(MainActivity.class);
@@ -33,6 +37,5 @@ public class ViewTest {
         Assert.assertTrue(fragment instanceof ViewCategoriesFragment);
         Assert.assertTrue(recyclerView.getAdapter() instanceof CategoryAdapter);
     }
-
 
 }
