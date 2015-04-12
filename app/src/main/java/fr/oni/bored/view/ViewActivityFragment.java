@@ -1,44 +1,31 @@
 package fr.oni.bored.view;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
 
 
-public class ViewActivityFragment extends Fragment {
+public class ViewActivityFragment extends BaseFragment {
     private static final String ARG_ACTIVITY = "activity";
-
-    private fr.oni.bored.model.Activity activity;
+    @InjectView(R.id.view_activity_title)
+    protected TextView titleView;
+    @InjectView(R.id.view_activity_description)
+    protected TextView descriptionView;
+    @Arg
+    fr.oni.bored.model.Activity activity;
     private OnViewActivityInteractionListener listener;
-    @InjectView(R.id.view_activity_title) protected TextView titleView;
-    @InjectView(R.id.view_activity_description) protected TextView descriptionView;
-
-    public static ViewActivityFragment newInstance(fr.oni.bored.model.Activity activity) {
-        ViewActivityFragment fragment = new ViewActivityFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_ACTIVITY, activity);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public ViewActivityFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            activity = getArguments().getParcelable(ARG_ACTIVITY);
-        }
     }
 
     @Override

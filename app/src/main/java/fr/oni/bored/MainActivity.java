@@ -19,10 +19,11 @@ import fr.oni.bored.data.Activity;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.view.ViewActivitiesFragment;
+import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
 import fr.oni.bored.view.ViewActivityFragment;
+import fr.oni.bored.view.ViewActivityFragmentBuilder;
 import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
-import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
 
 
 public class MainActivity extends ActionBarActivity
@@ -63,7 +64,7 @@ public class MainActivity extends ActionBarActivity
         Log.d(this.getClass().getName(), "onCreate end");
     }
 
-    private ArrayList<fr.oni.bored.model.Category> getCategories() throws SQLException{
+    private ArrayList<fr.oni.bored.model.Category> getCategories() throws SQLException {
         DatabaseHelper dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         Dao<Category, Integer> categoriesDao = dbHelper.getCategoryDao();
         List<Category> data = categoriesDao.queryForAll();
@@ -140,7 +141,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onViewActivity(fr.oni.bored.model.Activity activity) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewActivityFragment fragment = ViewActivityFragment.newInstance(activity);
+        ViewActivityFragment fragment = new ViewActivityFragmentBuilder(activity).build();
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
