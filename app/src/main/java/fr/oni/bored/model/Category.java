@@ -9,11 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ParcelablePlease
-public class Category implements Parcelable{
+public class Category implements Parcelable {
     public int id;
     public String title;
     public String description;
     public List<Activity> activities;
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            Category target = new Category();
+            CategoryParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 
     public Category() {
     }
@@ -37,20 +50,6 @@ public class Category implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         CategoryParcelablePlease.writeToParcel(this, dest, flags);
     }
-
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
-        @Override
-        public Category createFromParcel(Parcel source) {
-            Category target = new Category();
-            CategoryParcelablePlease.readFromParcel(target, source);
-            return target;
-        }
-
-        @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
 
 
 }

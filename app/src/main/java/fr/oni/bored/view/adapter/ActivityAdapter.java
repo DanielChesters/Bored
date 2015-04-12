@@ -22,8 +22,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.model.Activity;
+import fr.oni.bored.view.ViewActivitiesFragment;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
     private List<Activity> activities;
@@ -72,6 +72,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         private Context context;
         private Activity activity;
 
+        public ViewHolder(View itemView, ActivityAdapter adapter) {
+            super(itemView);
+            this.adapter = adapter;
+            this.context = itemView.getContext();
+            ButterKnife.inject(this, itemView);
+        }
+
         @OnClick(R.id.view_activity_row_text)
         public void goToViewActivity(View v) {
             adapter.getListener().onViewActivity(activity);
@@ -109,13 +116,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                 }
             });
             dialogBuild.create().show();
-        }
-
-        public ViewHolder(View itemView, ActivityAdapter adapter) {
-            super(itemView);
-            this.adapter = adapter;
-            this.context = itemView.getContext();
-            ButterKnife.inject(this, itemView);
         }
 
         public void setActivity(Activity activity) {

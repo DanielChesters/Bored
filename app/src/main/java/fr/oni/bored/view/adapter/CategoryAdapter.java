@@ -22,8 +22,8 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
 import fr.oni.bored.data.DatabaseHelper;
-import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.model.Category;
+import fr.oni.bored.view.ViewCategoriesFragment;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 

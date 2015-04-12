@@ -6,11 +6,24 @@ import android.os.Parcelable;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 @ParcelablePlease
-public class Activity implements Parcelable{
+public class Activity implements Parcelable {
     public int id;
     public String title;
     public String description;
     public int categoryId;
+    public static final Creator<Activity> CREATOR = new Creator<Activity>() {
+        @Override
+        public Activity createFromParcel(Parcel source) {
+            Activity target = new Activity();
+            ActivityParcelablePlease.readFromParcel(target, source);
+            return target;
+        }
+
+        @Override
+        public Activity[] newArray(int size) {
+            return new Activity[size];
+        }
+    };
 
     public Activity() {
     }
@@ -31,18 +44,4 @@ public class Activity implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         ActivityParcelablePlease.writeToParcel(this, dest, flags);
     }
-
-    public static final Creator<Activity> CREATOR = new Creator<Activity>() {
-        @Override
-        public Activity createFromParcel(Parcel source) {
-            Activity target = new Activity();
-            ActivityParcelablePlease.readFromParcel(target, source);
-            return target;
-        }
-
-        @Override
-        public Activity[] newArray(int size) {
-            return new Activity[size];
-        }
-    };
 }
