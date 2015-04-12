@@ -64,6 +64,8 @@ public class ViewTest {
         Assert.assertEquals("Description 1", descriptionView.getText());
     }
 
+    @Test
+    @SmallTest
     public void viewActivityTest() {
         RecyclerView recyclerView = getCategoriesRecyclerView();
         CategoryAdapter.ViewHolder categoryHolder = (CategoryAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
@@ -73,7 +75,7 @@ public class ViewTest {
         recyclerView = getActivitiesRecyclerView();
         ActivityAdapter.ViewHolder activityHolder = (ActivityAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
         View v2 = activityHolder.itemView;
-        View textView2 = v2.findViewById(R.id.view_category_row_text);
+        View textView2 = v2.findViewById(R.id.view_activity_row_text);
         textView2.performClick();
         Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.main_fragment);
         Assert.assertTrue(fragment instanceof ViewActivityFragment);
