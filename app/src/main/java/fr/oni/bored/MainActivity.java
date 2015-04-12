@@ -17,17 +17,21 @@ import fr.oni.bored.data.Activity;
 import fr.oni.bored.data.Category;
 import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.view.ViewActivitiesFragment;
+import fr.oni.bored.view.ViewActivityFragment;
 import fr.oni.bored.view.ViewCategoriesFragment;
 
 
-public class MainActivity extends ActionBarActivity implements ViewCategoriesFragment.OnViewCategoriesInteractionListener, ViewActivitiesFragment.OnViewActivitiesInteractionListener {
+public class MainActivity extends ActionBarActivity
+        implements ViewCategoriesFragment.OnViewCategoriesInteractionListener,
+        ViewActivitiesFragment.OnViewActivitiesInteractionListener,
+        ViewActivityFragment.OnViewActivityInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreate begin");
         super.onCreate(savedInstanceState);
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
@@ -118,6 +122,10 @@ public class MainActivity extends ActionBarActivity implements ViewCategoriesFra
 
     @Override
     public void onViewActivity(fr.oni.bored.model.Activity activity) {
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ViewActivityFragment fragment = ViewActivityFragment.newInstance(activity);
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
