@@ -2,44 +2,30 @@ package fr.oni.bored.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
-import fr.oni.bored.view.adapter.ActivityAdapter;
 import fr.oni.bored.model.Category;
+import fr.oni.bored.view.adapter.ActivityAdapter;
 
-public class ViewActivitiesFragment extends Fragment {
-    private static final String ARG_CATEGORY = "category";
+public class ViewActivitiesFragment extends BaseFragment {
     @InjectView(R.id.view_activities_recyclerView)
     protected RecyclerView recyclerView;
-    private Category category;
+    @Arg
+    Category category;
     private OnViewActivitiesInteractionListener listener;
 
     public ViewActivitiesFragment() {
 
-    }
-
-    public static ViewActivitiesFragment newInstance(Category category) {
-        ViewActivitiesFragment fragment = new ViewActivitiesFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_CATEGORY, category);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            category = getArguments().getParcelable(ARG_CATEGORY);
-        }
     }
 
     @Override

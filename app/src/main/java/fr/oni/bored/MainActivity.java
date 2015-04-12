@@ -22,6 +22,7 @@ import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.view.ViewActivityFragment;
 import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
+import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
 
 
 public class MainActivity extends ActionBarActivity
@@ -124,7 +125,7 @@ public class MainActivity extends ActionBarActivity
     public void onViewActivities(fr.oni.bored.model.Category category) {
         Log.d(this.getClass().getName(), "onViewActivities begin");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewActivitiesFragment fragment = ViewActivitiesFragment.newInstance(category);
+        ViewActivitiesFragment fragment = new ViewActivitiesFragmentBuilder(category).build();
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
