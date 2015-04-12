@@ -23,7 +23,7 @@ import fr.oni.bored.view.adapter.CategoryAdapter;
 
 public class ViewCategoriesFragment extends BaseFragment {
 
-    @InjectView(R.id.main_categories_recyclerView)
+    @InjectView(R.id.view_categories_recyclerView)
     protected RecyclerView recyclerView;
 
     @Arg
