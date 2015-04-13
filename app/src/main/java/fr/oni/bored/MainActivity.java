@@ -158,7 +158,7 @@ public class MainActivity extends ActionBarActivity
 
     public DatabaseHelper getDbHelper() {
         if (dbHelper == null) {
-            dbHelper = new DatabaseHelper(getApplicationContext());
+            dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         }
         return dbHelper;
     }
