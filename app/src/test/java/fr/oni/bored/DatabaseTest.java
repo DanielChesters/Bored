@@ -61,10 +61,8 @@ public class DatabaseTest {
     public void updateAnActivity() {
         Activity activity = TestUtils.createActivity(1);
         activity.save();
-        System.out.println(activity.getId());
         activity.description = "Nope";
         activity.save();
-        System.out.println(activity.getId());
         Activity activityResult = Activity.load(Activity.class, activity.getId());
         TestUtils.compareActivity(activity, activityResult);
     }
