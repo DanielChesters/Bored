@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +40,11 @@ public class MainActivity extends ActionBarActivity
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
         ActiveAndroid.initialize(this);
-        try {
-            createSampleCategories();
-        } catch (SQLException e) {
-            Log.e(this.getClass().getName(), e.getMessage(), e);
-        }
+        createSampleCategories();
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            ArrayList<fr.oni.bored.model.Category> categories = getCategories();
+            ArrayList<Category> categories = getCategories();
             ;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
@@ -65,7 +60,7 @@ public class MainActivity extends ActionBarActivity
         return new ArrayList<>(categories);
     }
 
-    private void createSampleCategories() throws SQLException {
+    private void createSampleCategories() {
         Category category1 = new Category("Category 1", "Description 1");
         Category category2 = new Category("Category 2", "Description 2");
         category1.save();
@@ -104,12 +99,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onEditCategory(fr.oni.bored.model.Category category) {
+    public void onEditCategory(Category category) {
         Toast.makeText(this, "onEditCategory", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onViewActivities(fr.oni.bored.model.Category category) {
+    public void onViewActivities(Category category) {
         Log.d(this.getClass().getName(), "onViewActivities begin");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ViewActivitiesFragment fragment = new ViewActivitiesFragmentBuilder(category).build();
@@ -120,12 +115,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onEditActivity(fr.oni.bored.model.Activity activity) {
+    public void onEditActivity(Activity activity) {
         Toast.makeText(this, "onEditActivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onViewActivity(fr.oni.bored.model.Activity activity) {
+    public void onViewActivity(Activity activity) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ViewActivityFragment fragment = new ViewActivityFragmentBuilder(activity).build();
         transaction.replace(R.id.main_fragment, fragment);
