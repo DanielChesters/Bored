@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -128,7 +129,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onEditCategory(fr.oni.bored.model.Category category) {
-
+        Toast.makeText(this, "onEditCategory", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -144,7 +145,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onEditActivity(fr.oni.bored.model.Activity activity) {
-
+        Toast.makeText(this, "onEditActivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override

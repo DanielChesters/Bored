@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Category;
@@ -25,6 +27,9 @@ public class ViewCategoriesFragment extends BaseFragment {
 
     @InjectView(R.id.view_categories_recyclerView)
     protected RecyclerView recyclerView;
+
+    @InjectView(R.id.view_categories_add_button)
+    protected FloatingActionButton addCategoryButton;
 
     @Arg
     ArrayList<Category> categories;
@@ -47,6 +52,8 @@ public class ViewCategoriesFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
+        addCategoryButton.attachToRecyclerView(recyclerView);
+
         Log.d(this.getClass().getName(), "onCreateView end");
         return view;
     }
@@ -59,6 +66,11 @@ public class ViewCategoriesFragment extends BaseFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnViewCategoriesInteractionListener");
         }
+    }
+
+    @OnClick(R.id.view_categories_add_button)
+    public void addCategory() {
+        listener.onEditCategory(null);
     }
 
     public interface OnViewCategoriesInteractionListener {

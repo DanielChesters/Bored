@@ -11,6 +11,7 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
 
@@ -53,6 +54,11 @@ public class ViewActivityFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    @OnClick(R.id.view_activity_edit_button)
+    public void editActivity() {
+        listener.onEditActivity(activity);
     }
 
     public interface OnViewActivityInteractionListener {
