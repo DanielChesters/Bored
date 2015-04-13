@@ -3,8 +3,8 @@ package fr.oni.bored;
 import android.content.Context;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -15,123 +15,118 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
-import java.sql.SQLException;
+import fr.oni.bored.model.Activity;
+import fr.oni.bored.model.Category;
 
-import fr.oni.bored.data.Activity;
-import fr.oni.bored.data.Category;
-import fr.oni.bored.data.DatabaseHelper;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, emulateSdk = 21)
 public class DatabaseTest {
-    private static DatabaseHelper dbHelper;
-    private static Dao<Activity, Integer> activityDao;
-    private static Dao<Category, Integer> categoryDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Context context = ShadowApplication.getInstance().getApplicationContext();
-        dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
-        activityDao = dbHelper.getDao(Activity.class);
-        categoryDao = dbHelper.getDao(Category.class);
+        Configuration configuration = new Configuration.Builder(context)
+                .setDatabaseName(null)
+                .setDatabaseVersion(1)
+                .create();
+        ActiveAndroid.initialize(configuration);
     }
 
     @After
-    public void afterAllTests() {
-        OpenHelperManager.releaseHelper();
-        dbHelper = null;
-        activityDao = null;
-        categoryDao = null;
+    public void afterTest() {
+        ActiveAndroid.dispose();
     }
 
     @Test
     @SmallTest
-    public void insertAnActivity() throws SQLException {
+    public void insertAnActivity() {
         Activity activity = TestUtils.createActivity(1);
-        activityDao.create(activity);
-
-        Activity activityResult = activityDao.queryForId(activity.getId());
+        activity.save();
+        Activity activityResult = Activity.load(Activity.class, activity.getId());
         TestUtils.compareActivity(activity, activityResult);
     }
 
     @Test
     @SmallTest
-    public void insertACategory() throws SQLException {
+    public void insertACategory() {
         Category category = TestUtils.createCategory(1);
-        categoryDao.create(category);
-
-        Category categoryResult = categoryDao.queryForId(category.getId());
+        category.save();
+        Category categoryResult = Category.load(Category.class, category.getId());
         TestUtils.compareCategory(category, categoryResult);
     }
 
     @Test
     @SmallTest
-    public void updateAnActivity() throws SQLException {
+    public void updateAnActivity() {
         Activity activity = TestUtils.createActivity(1);
-        activityDao.create(activity);
-        activity.setDescription("Nope");
-        activityDao.update(activity);
-
-        Activity activityResult = activityDao.queryForId(activity.getId());
+        activity.save();
+        System.out.println(activity.getId());
+        activity.description = "Nope";
+        activity.save();
+        System.out.println(activity.getId());
+        Activity activityResult = Activity.load(Activity.class, activity.getId());
         TestUtils.compareActivity(activity, activityResult);
     }
 
     @Test
     @SmallTest
-    public void updateACategory() throws SQLException {
+    public void updateACategory() {
         Category category = TestUtils.createCategory(1);
-        categoryDao.create(category);
-        category.setDescription("Nope");
-        categoryDao.update(category);
+        category.save();
+        category.description = "Nope";
+        category.save();
 
-        Category categoryResult = categoryDao.queryForId(category.getId());
+        Category categoryResult = Category.load(Category.class, category.getId());
         TestUtils.compareCategory(category, categoryResult);
     }
 
     @Test
     @SmallTest
-    public void insertAnActivityAndACategory() throws SQLException {
+    public void insertAnActivityAndACategory() {
         Category category = TestUtils.createCategory(1);
         Activity activity = TestUtils.createActivity(1);
 
-        activity.setCategory(category);
+        activity.category = category;
 
-        activityDao.create(activity);
+        category.save();
+        activity.save();
 
-        Activity activityResult = activityDao.queryForId(activity.getId());
-        Category categoryResult = categoryDao.queryForId(category.getId());
+        Activity activityResult = Activity.load(Activity.class, activity.getId());
+        Category categoryResult = Category.load(Category.class, category.getId());
 
         TestUtils.compareActivity(activity, activityResult);
         TestUtils.compareCategory(category, categoryResult);
 
-        TestUtils.compareCategory(category, activityResult.getCategory());
-        Assert.assertEquals(1, categoryResult.getActivities().size());
+        TestUtils.compareCategory(category, activityResult.category);
+        Assert.assertEquals(1, categoryResult.activities().size());
     }
 
     @Test
     @SmallTest
-    public void insertTwoActivitiesAndACategory() throws SQLException {
+    public void insertTwoActivitiesAndACategory() {
         Category category = TestUtils.createCategory(1);
         Activity activity1 = TestUtils.createActivity(1);
         Activity activity2 = TestUtils.createActivity(2);
 
-        activity1.setCategory(category);
-        activity2.setCategory(category);
+        activity1.category = category;
+        activity2.category = category;
 
-        activityDao.create(activity1);
-        activityDao.create(activity2);
+        category.save();
+        activity1.save();
+        activity2.save();
 
-        Activity activity1Result = activityDao.queryForId(activity1.getId());
-        Activity activity2Result = activityDao.queryForId(activity2.getId());
-        Category categoryResult = categoryDao.queryForId(category.getId());
+        Activity activity1Result = Activity.load(Activity.class, activity1.getId());
+        Activity activity2Result = Activity.load(Activity.class, activity2.getId());
+        Category categoryResult = Category.load(Category.class, category.getId());
 
         TestUtils.compareActivity(activity1, activity1Result);
         TestUtils.compareActivity(activity2, activity2Result);
         TestUtils.compareCategory(category, categoryResult);
 
-        TestUtils.compareCategory(category, activity1Result.getCategory());
-        TestUtils.compareCategory(category, activity2Result.getCategory());
-        Assert.assertEquals(2, categoryResult.getActivities().size());
+        TestUtils.compareCategory(category, activity1Result.category);
+        TestUtils.compareCategory(category, activity2Result.category);
+        Assert.assertEquals(2, categoryResult.activities().size());
     }
 
 }

@@ -39,7 +39,7 @@ public class ViewActivitiesFragment extends BaseFragment {
         final View view = inflater.inflate(R.layout.fragment_view_activities, container, false);
         ButterKnife.inject(this, view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        ActivityAdapter adapter = new ActivityAdapter(category.activities, listener);
+        ActivityAdapter adapter = new ActivityAdapter(category.activities(), listener);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         addActivityButton.attachToRecyclerView(recyclerView);

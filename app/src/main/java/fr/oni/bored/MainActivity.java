@@ -9,16 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Select;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.oni.bored.data.Activity;
-import fr.oni.bored.data.Category;
-import fr.oni.bored.data.DatabaseHelper;
+import fr.oni.bored.model.Activity;
+import fr.oni.bored.model.Category;
 import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
 import fr.oni.bored.view.ViewActivityFragment;
@@ -32,17 +31,6 @@ public class MainActivity extends ActionBarActivity
         ViewActivitiesFragment.OnViewActivitiesInteractionListener,
         ViewActivityFragment.OnViewActivityInteractionListener {
 
-    private DatabaseHelper dbHelper;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (dbHelper != null) {
-            OpenHelperManager.releaseHelper();
-            dbHelper = null;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreate begin");
@@ -52,7 +40,7 @@ public class MainActivity extends ActionBarActivity
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
-
+        ActiveAndroid.initialize(this);
         try {
             createSampleCategories();
         } catch (SQLException e) {
@@ -61,12 +49,8 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            ArrayList<fr.oni.bored.model.Category> categories = null;
-            try {
-                categories = getCategories();
-            } catch (SQLException e) {
-                Log.e(this.getClass().getName(), e.getMessage(), e);
-            }
+            ArrayList<fr.oni.bored.model.Category> categories = getCategories();
+            ;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
                     .build();
@@ -76,32 +60,24 @@ public class MainActivity extends ActionBarActivity
         Log.d(this.getClass().getName(), "onCreate end");
     }
 
-    private ArrayList<fr.oni.bored.model.Category> getCategories() throws SQLException {
-        Dao<Category, Integer> categoriesDao = getDbHelper().getCategoryDao();
-        List<Category> data = categoriesDao.queryForAll();
-        ArrayList<fr.oni.bored.model.Category> categories = new ArrayList<>();
-        for (Category category : data) {
-            categories.add(new fr.oni.bored.model.Category(category));
-        }
-        return categories;
+    private ArrayList<Category> getCategories() {
+        List<Category> categories = new Select().from(Category.class).execute();
+        return new ArrayList<>(categories);
     }
 
     private void createSampleCategories() throws SQLException {
-        Dao<Category, Integer> categoriesDao = getDbHelper().getCategoryDao();
         Category category1 = new Category("Category 1", "Description 1");
         Category category2 = new Category("Category 2", "Description 2");
-        categoriesDao.create(category1);
-        categoriesDao.create(category2);
-        Dao<Activity, Integer> activitiesDao = getDbHelper().getActivityDao();
+        category1.save();
+        category2.save();
         Activity activity1 = new Activity("Activity 1", "Description 1", category1);
         Activity activity2 = new Activity("Activity 2", "Description 2", category1);
         Activity activity3 = new Activity("Activity 3", "Description 3", category2);
         Activity activity4 = new Activity("Activity 4", "Description 4", category2);
-        activitiesDao.create(activity1);
-        activitiesDao.create(activity2);
-        activitiesDao.create(activity3);
-        activitiesDao.create(activity4);
-
+        activity1.save();
+        activity2.save();
+        activity3.save();
+        activity4.save();
     }
 
 
@@ -157,10 +133,4 @@ public class MainActivity extends ActionBarActivity
         transaction.commit();
     }
 
-    public DatabaseHelper getDbHelper() {
-        if (dbHelper == null) {
-            dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-        }
-        return dbHelper;
-    }
 }

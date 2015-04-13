@@ -10,17 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
-import fr.oni.bored.data.DatabaseHelper;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.view.ViewActivitiesFragment;
 
@@ -81,13 +77,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         @OnClick(R.id.view_activity_row_text)
         public void goToViewActivity(View v) {
             adapter.getListener().onViewActivity(activity);
-            Toast.makeText(v.getContext(), String.format("Go to activity : %d", activity.id), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), String.format("Go to activity : %d", activity.getId()), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.view_activity_row_edit_button)
         public void editActivity(View v) {
             adapter.getListener().onEditActivity(activity);
-            Toast.makeText(v.getContext(), String.format("Edit activity : %d", activity.id), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), String.format("Edit activity : %d", activity.getId()), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.view_activity_row_delete_button)
@@ -100,15 +96,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
-                            try {
-                                Dao<fr.oni.bored.data.Activity, Integer> activitiesDao = dbHelper.getActivityDao();
-                                activitiesDao.deleteById(activity.id);
-                                adapter.getActivities().remove(activity);
-                                adapter.notifyDataSetChanged();
-                            } catch (SQLException e) {
-                                Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
-                            }
+                            activity.delete();
+                            adapter.getActivities().remove(activity);
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override

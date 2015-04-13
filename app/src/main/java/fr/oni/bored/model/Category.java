@@ -3,17 +3,26 @@ package fr.oni.bored.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name = "Categories")
 @ParcelablePlease
-public class Category implements Parcelable {
-    public int id;
+public class Category extends Model implements Parcelable {
+    @Column(name = "Title")
     public String title;
+    @Column(name = "Description")
     public String description;
-    public List<Activity> activities;
+
+    public List<Activity> activities() {
+        return getMany(Activity.class, "Category");
+    }
+
     public static final Creator<Category> CREATOR = new Creator<Category>() {
         @Override
         public Category createFromParcel(Parcel source) {
@@ -29,16 +38,13 @@ public class Category implements Parcelable {
     };
 
     public Category() {
+        super();
     }
 
-    public Category(fr.oni.bored.data.Category category) {
-        this.id = category.getId();
-        this.title = category.getTitle();
-        this.description = category.getDescription();
-        this.activities = new ArrayList<>();
-        for (fr.oni.bored.data.Activity activity : category.getActivities()) {
-            this.activities.add(new Activity(activity));
-        }
+    public Category(String title, String description) {
+        super();
+        this.title = title;
+        this.description = description;
     }
 
     @Override

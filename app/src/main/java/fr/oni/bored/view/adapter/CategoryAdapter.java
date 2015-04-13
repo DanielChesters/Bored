@@ -10,17 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.R;
-import fr.oni.bored.data.DatabaseHelper;
+import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
 import fr.oni.bored.view.ViewCategoriesFragment;
 
@@ -81,13 +78,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @OnClick(R.id.view_category_row_text)
         public void goToActivities(View v) {
             adapter.getListener().onViewActivities(category);
-            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.id), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), String.format("Go to activities list : %d", category.getId()), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.view_category_row_edit_button)
         public void editCategory(View v) {
             adapter.getListener().onEditCategory(category);
-            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.id), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), String.format("Edit category : %d", category.getId()), Toast.LENGTH_SHORT).show();
         }
 
         @OnClick(R.id.view_category_row_delete_button)
@@ -100,15 +97,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
-                            try {
-                                Dao<fr.oni.bored.data.Category, Integer> categoriesDao = dbHelper.getCategoryDao();
-                                categoriesDao.deleteById(category.id);
-                                adapter.getCategories().remove(category);
-                                adapter.notifyDataSetChanged();
-                            } catch (SQLException e) {
-                                Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
+                            for (Activity activity : category.activities()) {
+                                activity.delete();
                             }
+                            category.delete();
+                            adapter.getCategories().remove(category);
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
