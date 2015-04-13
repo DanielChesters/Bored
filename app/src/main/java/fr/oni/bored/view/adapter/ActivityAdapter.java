@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -93,29 +94,31 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         @OnClick(R.id.view_activity_row_delete_button)
         public void deleteActivity() {
-            AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
-            dialogBuild.setTitle("Remove this activity?").setMessage("Do you really want to remove this activity?");
-            dialogBuild.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
-                    try {
-                        Dao<fr.oni.bored.data.Activity, Integer> activitiesDao = dbHelper.getActivityDao();
-                        activitiesDao.deleteById(activity.id);
-                        adapter.getActivities().remove(activity);
-                        adapter.notifyDataSetChanged();
-                    } catch (SQLException e) {
-                        Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
-                    }
-                }
-            });
-            dialogBuild.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.i(CategoryAdapter.class.getName(), "Remove canceled");
-                }
-            });
-            dialogBuild.create().show();
+            new MaterialDialog.Builder(context)
+                    .title("Remove this activity?")
+                    .content("Do you really want to remove this activity?")
+                    .positiveText("Ok")
+                    .negativeText("Cancel")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+                            try {
+                                Dao<fr.oni.bored.data.Activity, Integer> activitiesDao = dbHelper.getActivityDao();
+                                activitiesDao.deleteById(activity.id);
+                                adapter.getActivities().remove(activity);
+                                adapter.notifyDataSetChanged();
+                            } catch (SQLException e) {
+                                Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
+                            }
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            Log.i(CategoryAdapter.class.getName(), "Remove canceled");
+                            dialog.dismiss();
+                        }
+                    }).show();
         }
 
         public void setActivity(Activity activity) {

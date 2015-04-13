@@ -1,8 +1,6 @@
 package fr.oni.bored.view.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -93,11 +92,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @OnClick(R.id.view_category_row_delete_button)
         public void deleteCategory() {
-            AlertDialog.Builder dialogBuild = new AlertDialog.Builder(context);
-            dialogBuild.setTitle("Remove this category?").setMessage("Do you really want to remove this category?");
-            dialogBuild.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            new MaterialDialog.Builder(context)
+                    .title("Remove this category?")
+                    .content("Do you really want to remove this category?")
+                    .positiveText("Ok")
+                    .negativeText("Cancel")
+                    .callback(new MaterialDialog.ButtonCallback() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onPositive(MaterialDialog dialog) {
                     DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
                     try {
                         Dao<fr.oni.bored.data.Category, Integer> categoriesDao = dbHelper.getCategoryDao();
@@ -108,14 +110,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                         Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
                     }
                 }
-            });
-            dialogBuild.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onNegative(MaterialDialog dialog) {
                     Log.i(CategoryAdapter.class.getName(), "Remove canceled");
+                    dialog.dismiss();
                 }
-            });
-            dialogBuild.create().show();
+            }).show();
         }
 
         public TextView getTitleView() {
