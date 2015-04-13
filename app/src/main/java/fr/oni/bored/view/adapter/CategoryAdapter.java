@@ -98,25 +98,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .positiveText("Ok")
                     .negativeText("Cancel")
                     .callback(new MaterialDialog.ButtonCallback() {
-                @Override
-                public void onPositive(MaterialDialog dialog) {
-                    DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
-                    try {
-                        Dao<fr.oni.bored.data.Category, Integer> categoriesDao = dbHelper.getCategoryDao();
-                        categoriesDao.deleteById(category.id);
-                        adapter.getCategories().remove(category);
-                        adapter.notifyDataSetChanged();
-                    } catch (SQLException e) {
-                        Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
-                    }
-                }
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            DatabaseHelper dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+                            try {
+                                Dao<fr.oni.bored.data.Category, Integer> categoriesDao = dbHelper.getCategoryDao();
+                                categoriesDao.deleteById(category.id);
+                                adapter.getCategories().remove(category);
+                                adapter.notifyDataSetChanged();
+                            } catch (SQLException e) {
+                                Log.e(CategoryAdapter.class.getName(), e.getMessage(), e);
+                            }
+                        }
 
-                @Override
-                public void onNegative(MaterialDialog dialog) {
-                    Log.i(CategoryAdapter.class.getName(), "Remove canceled");
-                    dialog.dismiss();
-                }
-            }).show();
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            Log.i(CategoryAdapter.class.getName(), "Remove canceled");
+                            dialog.dismiss();
+                        }
+                    }).show();
         }
 
         public TextView getTitleView() {
