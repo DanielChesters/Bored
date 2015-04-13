@@ -31,6 +31,11 @@ public class Activity extends Model implements Parcelable {
             return new Activity[size];
         }
     };
+
+    public static Activity load(long id) {
+        return load(Activity.class, id);
+    }
+
     public Activity() {
         super();
     }

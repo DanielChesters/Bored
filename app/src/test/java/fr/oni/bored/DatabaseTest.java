@@ -43,7 +43,7 @@ public class DatabaseTest {
     public void insertAnActivity() {
         Activity activity = TestUtils.createActivity(1);
         activity.save();
-        Activity activityResult = Activity.load(Activity.class, activity.getId());
+        Activity activityResult = Activity.load(activity.getId());
         TestUtils.compareActivity(activity, activityResult);
     }
 
@@ -52,7 +52,7 @@ public class DatabaseTest {
     public void insertACategory() {
         Category category = TestUtils.createCategory(1);
         category.save();
-        Category categoryResult = Category.load(Category.class, category.getId());
+        Category categoryResult = Category.load(category.getId());
         TestUtils.compareCategory(category, categoryResult);
     }
 
@@ -63,7 +63,7 @@ public class DatabaseTest {
         activity.save();
         activity.description = "Nope";
         activity.save();
-        Activity activityResult = Activity.load(Activity.class, activity.getId());
+        Activity activityResult = Activity.load(activity.getId());
         TestUtils.compareActivity(activity, activityResult);
     }
 
@@ -75,7 +75,7 @@ public class DatabaseTest {
         category.description = "Nope";
         category.save();
 
-        Category categoryResult = Category.load(Category.class, category.getId());
+        Category categoryResult = Category.load(category.getId());
         TestUtils.compareCategory(category, categoryResult);
     }
 
@@ -90,8 +90,8 @@ public class DatabaseTest {
         category.save();
         activity.save();
 
-        Activity activityResult = Activity.load(Activity.class, activity.getId());
-        Category categoryResult = Category.load(Category.class, category.getId());
+        Activity activityResult = Activity.load(activity.getId());
+        Category categoryResult = Category.load(category.getId());
 
         TestUtils.compareActivity(activity, activityResult);
         TestUtils.compareCategory(category, categoryResult);
@@ -114,9 +114,9 @@ public class DatabaseTest {
         activity1.save();
         activity2.save();
 
-        Activity activity1Result = Activity.load(Activity.class, activity1.getId());
-        Activity activity2Result = Activity.load(Activity.class, activity2.getId());
-        Category categoryResult = Category.load(Category.class, category.getId());
+        Activity activity1Result = Activity.load(activity1.getId());
+        Activity activity2Result = Activity.load(activity2.getId());
+        Category categoryResult = Category.load(category.getId());
 
         TestUtils.compareActivity(activity1, activity1Result);
         TestUtils.compareActivity(activity2, activity2Result);

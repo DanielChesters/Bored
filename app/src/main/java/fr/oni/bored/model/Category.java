@@ -37,6 +37,10 @@ public class Category extends Model implements Parcelable {
         }
     };
 
+    public static Category load(long id) {
+        return load(Category.class, id);
+    }
+
     public Category() {
         super();
     }
