@@ -15,6 +15,8 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.oni.bored.edit.EditCategoryFragment;
+import fr.oni.bored.edit.EditCategoryFragmentBuilder;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
 import fr.oni.bored.view.ViewActivitiesFragment;
@@ -28,7 +30,8 @@ import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 public class MainActivity extends ActionBarActivity
         implements ViewCategoriesFragment.OnViewCategoriesInteractionListener,
         ViewActivitiesFragment.OnViewActivitiesInteractionListener,
-        ViewActivityFragment.OnViewActivityInteractionListener {
+        ViewActivityFragment.OnViewActivityInteractionListener,
+        EditCategoryFragment.OnEditCategoryInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +47,22 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            ArrayList<Category> categories = getCategories();
-            ;
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
-                    .build();
-            transaction.replace(R.id.main_fragment, fragment);
-            transaction.commit();
+            goToViewCategoriesFragment(false);
         }
         Log.d(this.getClass().getName(), "onCreate end");
+    }
+
+    private void goToViewCategoriesFragment(boolean addToBackStack) {
+        ArrayList<Category> categories = getCategories();
+        ;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
+                .build();
+        transaction.replace(R.id.main_fragment, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
     }
 
     private ArrayList<Category> getCategories() {
@@ -100,7 +110,11 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onEditCategory(Category category) {
-        Toast.makeText(this, "onEditCategory", Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EditCategoryFragment fragment = new EditCategoryFragmentBuilder(category).build();
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -128,4 +142,8 @@ public class MainActivity extends ActionBarActivity
         transaction.commit();
     }
 
+    @Override
+    public void onEditCategoryDone() {
+        goToViewCategoriesFragment(true);
+    }
 }
