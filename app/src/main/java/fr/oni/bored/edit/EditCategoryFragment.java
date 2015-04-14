@@ -22,7 +22,7 @@ public class EditCategoryFragment extends BaseFragment {
     protected EditText titleText;
     @InjectView(R.id.edit_category_description)
     protected EditText descriptionText;
-    @Arg
+    @Arg(required = false)
     Category category;
     private OnEditCategoryInteractionListener listener;
 

@@ -75,7 +75,7 @@ public class ViewCategoriesFragment extends BaseFragment {
 
     public interface OnViewCategoriesInteractionListener {
         void onEditCategory(fr.oni.bored.model.Category category);
-
+        void onCreateCategory();
         void onViewActivities(fr.oni.bored.model.Category category);
     }
 }

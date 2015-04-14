@@ -114,7 +114,17 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onEditCategory(Category category) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        EditCategoryFragment fragment = new EditCategoryFragmentBuilder(category).build();
+        EditCategoryFragment fragment = new EditCategoryFragmentBuilder()
+                .category(category).build();
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void onCreateCategory() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EditCategoryFragment fragment = new EditCategoryFragmentBuilder().build();
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
