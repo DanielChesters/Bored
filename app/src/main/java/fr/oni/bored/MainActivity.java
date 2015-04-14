@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private ArrayList<Category> getCategories() {
-        List<Category> categories = new Select().from(Category.class).execute();
+        List<Category> categories = Category.loadAll();
         return new ArrayList<>(categories);
     }
 
