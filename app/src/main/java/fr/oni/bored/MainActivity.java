@@ -15,6 +15,8 @@ import com.activeandroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.oni.bored.edit.EditActivityFragment;
+import fr.oni.bored.edit.EditActivityFragmentBuilder;
 import fr.oni.bored.edit.EditCategoryFragment;
 import fr.oni.bored.edit.EditCategoryFragmentBuilder;
 import fr.oni.bored.model.Activity;
@@ -31,7 +33,8 @@ public class MainActivity extends ActionBarActivity
         implements ViewCategoriesFragment.OnViewCategoriesInteractionListener,
         ViewActivitiesFragment.OnViewActivitiesInteractionListener,
         ViewActivityFragment.OnViewActivityInteractionListener,
-        EditCategoryFragment.OnEditCategoryInteractionListener {
+        EditCategoryFragment.OnEditCategoryInteractionListener,
+        EditActivityFragment.OnEditActivityInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +132,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onEditActivity(Activity activity) {
-        Toast.makeText(this, "onEditActivity", Toast.LENGTH_SHORT).show();
+    public void onCreateActivity(Category category) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EditActivityFragment fragment = new EditActivityFragmentBuilder().category(category).build();
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -145,5 +152,19 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onEditCategoryDone() {
         goToViewCategoriesFragment(true);
+    }
+
+    @Override
+    public void onEditActivityDone() {
+        goToViewCategoriesFragment(true);
+    }
+
+    @Override
+    public void onEditActivity(Activity activity) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EditActivityFragment fragment = new EditActivityFragmentBuilder().activity(activity).build();
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -59,13 +59,13 @@ public class ViewActivitiesFragment extends BaseFragment {
 
     @OnClick(R.id.view_activities_add_button)
     public void addActivity() {
-        listener.onEditActivity(null);
+        listener.onCreateActivity(category);
     }
 
 
     public interface OnViewActivitiesInteractionListener {
+        void onCreateActivity(Category category);
         void onEditActivity(fr.oni.bored.model.Activity activity);
-
         void onViewActivity(fr.oni.bored.model.Activity activity);
     }
 

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 import java.util.ArrayList;
@@ -41,6 +42,10 @@ public class Category extends Model implements Parcelable {
         return load(Category.class, id);
     }
 
+    public static List<Category> loadAll() {
+        return new Select().from(Category.class).execute();
+    }
+
     public Category() {
         super();
     }
@@ -61,5 +66,8 @@ public class Category extends Model implements Parcelable {
         CategoryParcelablePlease.writeToParcel(this, dest, flags);
     }
 
-
+    @Override
+    public String toString() {
+        return title;
+    }
 }

@@ -14,10 +14,10 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
+import fr.oni.bored.model.Category;
 
 
 public class ViewActivityFragment extends BaseFragment {
-    private static final String ARG_ACTIVITY = "activity";
     @InjectView(R.id.view_activity_title)
     protected TextView titleView;
     @InjectView(R.id.view_activity_description)
