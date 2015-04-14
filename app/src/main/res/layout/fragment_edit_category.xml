@@ -12,18 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edit_category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edit_category_title_hint"/>
+            android:hint="@string/edit_category_title_hint" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edit_category_description"
             android:singleLine="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edit_category_description_hint"/>
+            android:hint="@string/edit_category_description_hint" />
     </LinearLayout>
 
     <com.melnykov.fab.FloatingActionButton
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@drawable/ic_done_black_36dp"
         android:layout_marginBottom="16dp" />
 
 </FrameLayout>
