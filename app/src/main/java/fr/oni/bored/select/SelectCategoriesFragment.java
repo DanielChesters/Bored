@@ -43,6 +43,7 @@ public class SelectCategoriesFragment extends BaseFragment {
     Map<Category, Boolean> selectedCategories;
     private OnSelectCategoriesInteractionListener listener;
     private CategoryAdapter adapter;
+    private boolean allSelected = false;
 
     public SelectCategoriesFragment() {
     }
@@ -85,8 +86,13 @@ public class SelectCategoriesFragment extends BaseFragment {
     public void selectAllCategories() {
         selectedCategories.clear();
         for (Category category : categories) {
-            selectedCategories.put(category, true);
+            if (allSelected) {
+                selectedCategories.put(category, false);
+            } else {
+                selectedCategories.put(category, true);
+            }
         }
+        allSelected = !allSelected;
         adapter.notifyDataSetChanged();
     }
 
@@ -99,7 +105,7 @@ public class SelectCategoriesFragment extends BaseFragment {
             }
         }
         Collections.shuffle(activities);
-        listener.onRandomizeActivities(new HashSet<>(activities.subList(0, 4)));
+        listener.onRandomizeActivities(new HashSet<>(activities.subList(0, 5)));
     }
 
     public interface OnSelectCategoriesInteractionListener {
