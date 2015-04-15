@@ -86,11 +86,7 @@ public class SelectCategoriesFragment extends BaseFragment {
     public void selectAllCategories() {
         selectedCategories.clear();
         for (Category category : categories) {
-            if (allSelected) {
-                selectedCategories.put(category, false);
-            } else {
-                selectedCategories.put(category, true);
-            }
+            selectedCategories.put(category, !allSelected);
         }
         allSelected = !allSelected;
         adapter.notifyDataSetChanged();
