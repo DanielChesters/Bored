@@ -10,10 +10,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import fr.oni.bored.edit.EditActivityFragment;
 import fr.oni.bored.edit.EditActivityFragmentBuilder;
@@ -21,6 +21,8 @@ import fr.oni.bored.edit.EditCategoryFragment;
 import fr.oni.bored.edit.EditCategoryFragmentBuilder;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
+import fr.oni.bored.select.SelectCategoriesFragment;
+import fr.oni.bored.select.SelectCategoriesFragmentBuilder;
 import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
 import fr.oni.bored.view.ViewActivityFragment;
@@ -34,7 +36,8 @@ public class MainActivity extends ActionBarActivity
         ViewActivitiesFragment.OnViewActivitiesInteractionListener,
         ViewActivityFragment.OnViewActivityInteractionListener,
         EditCategoryFragment.OnEditCategoryInteractionListener,
-        EditActivityFragment.OnEditActivityInteractionListener {
+        EditActivityFragment.OnEditActivityInteractionListener,
+        SelectCategoriesFragment.OnSelectCategoriesInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +106,26 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        switch (id) {
+            case R.id.action_randomize:
+                goToRandomize();
+                return true;
 
-        return super.onOptionsItemSelected(item);
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private void goToRandomize() {
+        ArrayList<Category> categories = new ArrayList<>(Category.loadAll());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        SelectCategoriesFragment fragment = SelectCategoriesFragmentBuilder.newSelectCategoriesFragment(categories);
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -176,5 +193,10 @@ public class MainActivity extends ActionBarActivity
         transaction.replace(R.id.main_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onRandomizeActivities(Set<Activity> activities) {
+        Toast.makeText(this, String.format("activities : %s", activities), Toast.LENGTH_LONG).show();
     }
 }
