@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,6 +30,13 @@ public class SelectActivitiesFragment extends BaseFragment {
     @Arg
     ArrayList<Activity> activities;
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.action_randomize);
+        item.setVisible(false);
+        getActivity().invalidateOptionsMenu();
+    }
+
     public SelectActivitiesFragment() {
     }
 
@@ -39,6 +49,7 @@ public class SelectActivitiesFragment extends BaseFragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        setHasOptionsMenu(true);
         return view;
     }
 }
