@@ -1,5 +1,7 @@
 package fr.oni.bored.select;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +29,7 @@ import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Category;
 import fr.oni.bored.select.adapter.CategoryAdapter;
+import fr.oni.bored.util.UiUtils;
 
 
 public class SelectCategoriesFragment extends BaseFragment {
@@ -39,6 +42,10 @@ public class SelectCategoriesFragment extends BaseFragment {
 
     @InjectView(R.id.select_categories_random_button)
     protected FloatingActionButton randomActivityButton;
+
+    @InjectView(R.id.select_categories_buttons)
+    protected View buttonsView;
+
     @Arg
     ArrayList<Category> categories;
 
@@ -47,6 +54,9 @@ public class SelectCategoriesFragment extends BaseFragment {
     private CategoryAdapter adapter;
 
     private boolean allSelected = false;
+
+    private boolean animationInProgress = false;
+    private ValueAnimator buttonsViewAnimator;
 
     public SelectCategoriesFragment() {
     }
@@ -71,8 +81,69 @@ public class SelectCategoriesFragment extends BaseFragment {
         adapter = new CategoryAdapter(categories, listener, selectedCategories);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    hideButtons();
+                } else {
+                    showButtons();
+                }
+            }
+        });
+
         setHasOptionsMenu(true);
         return view;
+    }
+
+    private void hideButtons() {
+        moveButtons(UiUtils.dpToPx(getActivity(), 150));
+    }
+
+    private void showButtons() {
+        moveButtons(0);
+    }
+
+    private void moveButtons(final float toTranslationY) {
+        if (buttonsView.getTranslationY() != toTranslationY) {
+            if (!animationInProgress) {
+                buttonsViewAnimator = ValueAnimator.ofFloat(buttonsView.getTranslationY(), toTranslationY).setDuration(200);
+
+                buttonsViewAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        float translationY = (float) animation.getAnimatedValue();
+                        buttonsView.setTranslationY(translationY);
+                    }
+                });
+
+                buttonsViewAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        animationInProgress = true;
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animationInProgress = false;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        animationInProgress = false;
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+
+                buttonsViewAnimator.start();
+            }
+        }
     }
 
     @Override
