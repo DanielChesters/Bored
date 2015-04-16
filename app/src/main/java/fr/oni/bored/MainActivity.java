@@ -2,12 +2,12 @@ package fr.oni.bored;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
@@ -15,21 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import fr.oni.bored.edit.EditActivityFragment;
 import fr.oni.bored.edit.EditActivityFragmentBuilder;
-import fr.oni.bored.edit.EditCategoryFragment;
 import fr.oni.bored.edit.EditCategoryFragmentBuilder;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
-import fr.oni.bored.select.SelectActivitiesFragment;
 import fr.oni.bored.select.SelectActivitiesFragmentBuilder;
-import fr.oni.bored.select.SelectCategoriesFragment;
 import fr.oni.bored.select.SelectCategoriesFragmentBuilder;
-import fr.oni.bored.view.ViewActivitiesFragment;
 import fr.oni.bored.view.ViewActivitiesFragmentBuilder;
-import fr.oni.bored.view.ViewActivityFragment;
 import fr.oni.bored.view.ViewActivityFragmentBuilder;
-import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 
 
@@ -49,17 +42,23 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            goToViewCategoriesFragment(false);
+            ArrayList<Category> categories = getCategories();
+            goToFragment(new ViewCategoriesFragmentBuilder(categories).build(), false);
         }
         Log.d(this.getClass().getName(), "onCreate end");
     }
 
-    private void goToViewCategoriesFragment(boolean addToBackStack) {
-        ArrayList<Category> categories = getCategories();
+    private void goToFragment(BaseFragment fragment) {
+        goToFragment(fragment, true);
+    }
+
+    private void goToFragment(BaseFragment fragment, boolean addToBackStack) {
+        goToFragment(R.id.main_fragment, fragment, addToBackStack);
+    }
+
+    private void goToFragment(@IdRes int id, BaseFragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
-                .build();
-        transaction.replace(R.id.main_fragment, fragment);
+        transaction.replace(id, fragment);
         if (addToBackStack) {
             transaction.addToBackStack(null);
         }
@@ -89,16 +88,12 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
@@ -114,87 +109,47 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
 
     private void goToRandomize() {
         ArrayList<Category> categories = new ArrayList<>(Category.loadAll());
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SelectCategoriesFragment fragment = SelectCategoriesFragmentBuilder.newSelectCategoriesFragment(categories);
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new SelectCategoriesFragmentBuilder(categories).build());
     }
 
     @Override
     public void onEditCategory(Category category) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        EditCategoryFragment fragment = new EditCategoryFragmentBuilder()
-                .category(category).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new EditCategoryFragmentBuilder().category(category).build());
     }
 
     @Override
     public void onCreateCategory() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        EditCategoryFragment fragment = new EditCategoryFragmentBuilder().build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new EditCategoryFragmentBuilder().build());
     }
 
     @Override
     public void onViewActivities(Category category) {
-        Log.d(this.getClass().getName(), "onViewActivities begin");
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewActivitiesFragment fragment = new ViewActivitiesFragmentBuilder(category).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        Log.d(this.getClass().getName(), "onViewActivities end");
+        goToFragment(new ViewActivitiesFragmentBuilder(category).build());
     }
 
     @Override
     public void onCreateActivity(Category category) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        EditActivityFragment fragment = new EditActivityFragmentBuilder().category(category).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new EditActivityFragmentBuilder().build());
     }
 
     @Override
     public void onViewActivity(Activity activity) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ViewActivityFragment fragment = new ViewActivityFragmentBuilder(activity).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new ViewActivityFragmentBuilder(activity).build());
     }
 
     @Override
-    public void onEditCategoryDone() {
-        goToViewCategoriesFragment(true);
-    }
-
-    @Override
-    public void onEditActivityDone() {
-        goToViewCategoriesFragment(true);
+    public void onEditDone() {
+        ArrayList<Category> categories = getCategories();
+        goToFragment(new ViewCategoriesFragmentBuilder(categories).build());
     }
 
     @Override
     public void onEditActivity(Activity activity) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        EditActivityFragment fragment = new EditActivityFragmentBuilder().activity(activity).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new EditActivityFragmentBuilder().activity(activity).build());
     }
 
     @Override
     public void onRandomizeActivities(Set<Activity> activities) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SelectActivitiesFragment fragment =
-                new SelectActivitiesFragmentBuilder(new ArrayList<>(activities)).build();
-        transaction.replace(R.id.main_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        goToFragment(new SelectActivitiesFragmentBuilder(new ArrayList<>(activities)).build());
     }
 }

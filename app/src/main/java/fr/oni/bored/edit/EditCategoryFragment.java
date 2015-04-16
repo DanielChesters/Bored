@@ -49,6 +49,6 @@ public class EditCategoryFragment extends BaseFragment {
         category.title = titleText.getText().toString();
         category.description = descriptionText.getText().toString();
         category.save();
-        listener.onEditCategoryDone();
+        listener.onEditDone();
     }
 }

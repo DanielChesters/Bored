@@ -74,6 +74,6 @@ public class EditActivityFragment extends BaseFragment {
         activity.description = descriptionText.getText().toString();
 
         activity.save();
-        listener.onEditActivityDone();
+        listener.onEditDone();
     }
 }

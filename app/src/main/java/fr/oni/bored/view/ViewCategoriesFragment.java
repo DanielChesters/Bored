@@ -58,7 +58,7 @@ public class ViewCategoriesFragment extends BaseFragment {
 
     @OnClick(R.id.view_categories_add_button)
     public void addCategory() {
-        listener.onEditCategory(null);
+        listener.onCreateCategory();
     }
 
 }

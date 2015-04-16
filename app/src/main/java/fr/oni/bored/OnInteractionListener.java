@@ -20,7 +20,5 @@ public interface OnInteractionListener {
 
     void onRandomizeActivities(Set<Activity> activities);
 
-    void onEditActivityDone();
-
-    void onEditCategoryDone();
+    void onEditDone();
 }
