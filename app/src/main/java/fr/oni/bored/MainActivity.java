@@ -21,6 +21,8 @@ import fr.oni.bored.edit.EditCategoryFragment;
 import fr.oni.bored.edit.EditCategoryFragmentBuilder;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
+import fr.oni.bored.select.SelectActivitiesFragment;
+import fr.oni.bored.select.SelectActivitiesFragmentBuilder;
 import fr.oni.bored.select.SelectCategoriesFragment;
 import fr.oni.bored.select.SelectCategoriesFragmentBuilder;
 import fr.oni.bored.view.ViewActivitiesFragment;
@@ -190,6 +192,11 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
 
     @Override
     public void onRandomizeActivities(Set<Activity> activities) {
-        Toast.makeText(this, String.format("activities : %s", activities), Toast.LENGTH_LONG).show();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        SelectActivitiesFragment fragment =
+                new SelectActivitiesFragmentBuilder(new ArrayList<>(activities)).build();
+        transaction.replace(R.id.main_fragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
