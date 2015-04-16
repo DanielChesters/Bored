@@ -106,8 +106,6 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
                 goToRandomize();
                 return true;
 
-            case R.id.action_settings:
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

@@ -3,6 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_randomize" android:title="@string/action_randomize"
         android:icon="@drawable/ic_dice_grey600_36dp" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
