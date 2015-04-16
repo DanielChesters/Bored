@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
 
     private void goToFragment(@IdRes int id, BaseFragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         transaction.replace(id, fragment);
         if (addToBackStack) {
             transaction.addToBackStack(null);
