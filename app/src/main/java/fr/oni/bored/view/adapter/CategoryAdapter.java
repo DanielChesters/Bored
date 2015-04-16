@@ -16,17 +16,17 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import fr.oni.bored.OnInteractionListener;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
-import fr.oni.bored.view.ViewCategoriesFragment;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private ViewCategoriesFragment.OnViewCategoriesInteractionListener listener;
+    private OnInteractionListener listener;
 
-    public CategoryAdapter(List<Category> categories, ViewCategoriesFragment.OnViewCategoriesInteractionListener listener) {
+    public CategoryAdapter(List<Category> categories, OnInteractionListener listener) {
         this.categories = categories;
         this.listener = listener;
     }
@@ -55,7 +55,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories;
     }
 
-    public ViewCategoriesFragment.OnViewCategoriesInteractionListener getListener() {
+    public OnInteractionListener getListener() {
         return listener;
     }
 

@@ -1,6 +1,5 @@
 package fr.oni.bored.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +13,17 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
-import fr.oni.bored.model.Category;
 
 
 public class ViewActivityFragment extends BaseFragment {
     @InjectView(R.id.view_activity_title)
     protected TextView titleView;
+
     @InjectView(R.id.view_activity_description)
     protected TextView descriptionView;
+
     @Arg
     fr.oni.bored.model.Activity activity;
-    private OnViewActivityInteractionListener listener;
 
     public ViewActivityFragment() {
     }
@@ -40,17 +39,6 @@ public class ViewActivityFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (OnViewActivityInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnViewActivityInteractionListener");
-        }
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
         listener = null;
@@ -60,9 +48,4 @@ public class ViewActivityFragment extends BaseFragment {
     public void editActivity() {
         listener.onEditActivity(activity);
     }
-
-    public interface OnViewActivityInteractionListener {
-        void onEditActivity(fr.oni.bored.model.Activity activity);
-    }
-
 }

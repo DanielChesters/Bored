@@ -1,6 +1,5 @@
 package fr.oni.bored.edit;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +22,18 @@ import fr.oni.bored.model.Category;
 public class EditActivityFragment extends BaseFragment {
     @InjectView(R.id.edit_activity_title)
     protected EditText titleText;
+
     @InjectView(R.id.edit_activity_description)
     protected EditText descriptionText;
+
     @InjectView(R.id.edit_activity_category)
     protected Spinner categorySpinner;
+
     @Arg(required = false)
     fr.oni.bored.model.Activity activity;
+
     @Arg(required = false)
     Category category;
-    private OnEditActivityInteractionListener listener;
 
     public EditActivityFragment() {
     }
@@ -56,18 +58,6 @@ public class EditActivityFragment extends BaseFragment {
         return view;
     }
 
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (OnEditActivityInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnEditActivityInteractionListener");
-        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -86,9 +76,4 @@ public class EditActivityFragment extends BaseFragment {
         activity.save();
         listener.onEditActivityDone();
     }
-
-    public interface OnEditActivityInteractionListener {
-        void onEditActivityDone();
-    }
-
 }

@@ -31,13 +31,7 @@ import fr.oni.bored.view.ViewCategoriesFragment;
 import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 
 
-public class MainActivity extends ActionBarActivity
-        implements ViewCategoriesFragment.OnViewCategoriesInteractionListener,
-        ViewActivitiesFragment.OnViewActivitiesInteractionListener,
-        ViewActivityFragment.OnViewActivityInteractionListener,
-        EditCategoryFragment.OnEditCategoryInteractionListener,
-        EditActivityFragment.OnEditActivityInteractionListener,
-        SelectCategoriesFragment.OnSelectCategoriesInteractionListener {
+public class MainActivity extends ActionBarActivity implements OnInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +54,6 @@ public class MainActivity extends ActionBarActivity
 
     private void goToViewCategoriesFragment(boolean addToBackStack) {
         ArrayList<Category> categories = getCategories();
-        ;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ViewCategoriesFragment fragment = new ViewCategoriesFragmentBuilder(categories)
                 .build();

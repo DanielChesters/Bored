@@ -18,18 +18,18 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import fr.oni.bored.OnInteractionListener;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
-import fr.oni.bored.select.SelectCategoriesFragment;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private SelectCategoriesFragment.OnSelectCategoriesInteractionListener listener;
+    private OnInteractionListener listener;
     private Map<Category, Boolean> selectedCategories;
 
-    public CategoryAdapter(List<Category> categories, SelectCategoriesFragment.OnSelectCategoriesInteractionListener listener, Map<Category, Boolean> selectedCategories) {
+    public CategoryAdapter(List<Category> categories, OnInteractionListener listener, Map<Category, Boolean> selectedCategories) {
         this.categories = categories;
         this.listener = listener;
         this.selectedCategories = selectedCategories;
@@ -56,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories == null ? 0 : categories.size();
     }
 
-    public SelectCategoriesFragment.OnSelectCategoriesInteractionListener getListener() {
+    public OnInteractionListener getListener() {
         return listener;
     }
 

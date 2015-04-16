@@ -1,6 +1,5 @@
 package fr.oni.bored.edit;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +14,16 @@ import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Category;
-import fr.oni.bored.view.adapter.CategoryAdapter;
 
 public class EditCategoryFragment extends BaseFragment {
     @InjectView(R.id.edit_category_title)
     protected EditText titleText;
+
     @InjectView(R.id.edit_category_description)
     protected EditText descriptionText;
+
     @Arg(required = false)
     Category category;
-    private OnEditCategoryInteractionListener listener;
 
 
     public EditCategoryFragment() {
@@ -42,17 +41,6 @@ public class EditCategoryFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (OnEditCategoryInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnEditCategoryInteractionListener");
-        }
-    }
-
     @OnClick(R.id.edit_category_done)
     public void saveCategory() {
         if (category == null) {
@@ -62,9 +50,5 @@ public class EditCategoryFragment extends BaseFragment {
         category.description = descriptionText.getText().toString();
         category.save();
         listener.onEditCategoryDone();
-    }
-
-    public interface OnEditCategoryInteractionListener {
-        void onEditCategoryDone();
     }
 }

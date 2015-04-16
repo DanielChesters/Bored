@@ -1,6 +1,5 @@
 package fr.oni.bored.select;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,14 +38,15 @@ public class SelectCategoriesFragment extends BaseFragment {
     protected FloatingActionButton randomActivityButton;
     @Arg
     ArrayList<Category> categories;
+
     Map<Category, Boolean> selectedCategories;
-    private OnSelectCategoriesInteractionListener listener;
+
     private CategoryAdapter adapter;
+
     private boolean allSelected = false;
 
     public SelectCategoriesFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,17 +62,6 @@ public class SelectCategoriesFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (OnSelectCategoriesInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnSelectCategoriesInteractionListener");
-        }
     }
 
     @Override
@@ -102,14 +90,6 @@ public class SelectCategoriesFragment extends BaseFragment {
         }
         Collections.shuffle(activities);
         listener.onRandomizeActivities(new HashSet<>(activities.subList(0, 5)));
-    }
-
-    public interface OnSelectCategoriesInteractionListener {
-        void onRandomizeActivities(Set<fr.oni.bored.model.Activity> activities);
-
-        void onViewActivities(Category category);
-
-        void onEditCategory(Category category);
     }
 
 }

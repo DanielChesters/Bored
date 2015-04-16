@@ -16,15 +16,15 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import fr.oni.bored.OnInteractionListener;
 import fr.oni.bored.R;
 import fr.oni.bored.model.Activity;
-import fr.oni.bored.view.ViewActivitiesFragment;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
     private List<Activity> activities;
-    private ViewActivitiesFragment.OnViewActivitiesInteractionListener listener;
+    private OnInteractionListener listener;
 
-    public ActivityAdapter(List<Activity> activities, ViewActivitiesFragment.OnViewActivitiesInteractionListener listener) {
+    public ActivityAdapter(List<Activity> activities, OnInteractionListener listener) {
         this.activities = activities;
         this.listener = listener;
     }
@@ -53,7 +53,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         return activities;
     }
 
-    public ViewActivitiesFragment.OnViewActivitiesInteractionListener getListener() {
+    public OnInteractionListener getListener() {
         return listener;
     }
 

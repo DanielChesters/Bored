@@ -1,6 +1,5 @@
 package fr.oni.bored.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +33,6 @@ public class ViewCategoriesFragment extends BaseFragment {
     @Arg
     ArrayList<Category> categories;
 
-    private OnViewCategoriesInteractionListener listener;
 
     public ViewCategoriesFragment() {
 
@@ -58,24 +56,9 @@ public class ViewCategoriesFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            this.listener = (OnViewCategoriesInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnViewCategoriesInteractionListener");
-        }
-    }
-
     @OnClick(R.id.view_categories_add_button)
     public void addCategory() {
         listener.onEditCategory(null);
     }
 
-    public interface OnViewCategoriesInteractionListener {
-        void onEditCategory(fr.oni.bored.model.Category category);
-        void onCreateCategory();
-        void onViewActivities(fr.oni.bored.model.Category category);
-    }
 }
