@@ -92,8 +92,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             new MaterialDialog.Builder(context)
                     .title(R.string.detele_category_dialog_title)
                     .content(R.string.delete_category_dialog_content)
-                    .positiveText(R.string.ok_string)
-                    .negativeText(R.string.cancel_string)
+                    .positiveText(android.R.string.ok)
+                    .negativeText(android.R.string.cancel)
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {

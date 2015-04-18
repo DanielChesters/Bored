@@ -91,8 +91,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
             new MaterialDialog.Builder(context)
                     .title(R.string.delete_activity_dialog_title)
                     .content(R.string.delete_activity_dialog_content)
-                    .positiveText(R.string.ok_string)
-                    .negativeText(R.string.cancel_string)
+                    .positiveText(android.R.string.ok)
+                    .negativeText(android.R.string.cancel)
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
