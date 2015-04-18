@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
 
@@ -21,10 +21,10 @@ import fr.oni.bored.model.Category;
 
 public class EditActivityFragment extends BaseFragment {
     @InjectView(R.id.edit_activity_title)
-    protected EditText titleText;
+    protected MaterialEditText titleText;
 
     @InjectView(R.id.edit_activity_description)
-    protected EditText descriptionText;
+    protected MaterialEditText descriptionText;
 
     @InjectView(R.id.edit_activity_category)
     protected Spinner categorySpinner;
@@ -69,11 +69,16 @@ public class EditActivityFragment extends BaseFragment {
         if (activity == null) {
             activity = new fr.oni.bored.model.Activity();
         }
-        activity.category = (Category) categorySpinner.getSelectedItem();
-        activity.title = titleText.getText().toString();
-        activity.description = descriptionText.getText().toString();
 
-        activity.save();
-        listener.onEditDone();
+        final String title = titleText.getText().toString();
+        if (title.isEmpty()) {
+            titleText.setError("Title is required");
+        } else {
+            activity.category = (Category) categorySpinner.getSelectedItem();
+            activity.title = title;
+            activity.description = descriptionText.getText().toString();
+            activity.save();
+            listener.onEditDone();
+        }
     }
 }

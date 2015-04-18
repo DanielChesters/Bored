@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.rengwuxian.materialedittext.MaterialEditText;
+import com.rengwuxian.materialedittext.validation.RegexpValidator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -17,10 +18,10 @@ import fr.oni.bored.model.Category;
 
 public class EditCategoryFragment extends BaseFragment {
     @InjectView(R.id.edit_category_title)
-    protected EditText titleText;
+    protected MaterialEditText titleText;
 
     @InjectView(R.id.edit_category_description)
-    protected EditText descriptionText;
+    protected MaterialEditText descriptionText;
 
     @Arg(required = false)
     Category category;
@@ -46,9 +47,15 @@ public class EditCategoryFragment extends BaseFragment {
         if (category == null) {
             category = new Category();
         }
-        category.title = titleText.getText().toString();
-        category.description = descriptionText.getText().toString();
-        category.save();
-        listener.onEditDone();
+        final String title = titleText.getText().toString();
+        if (title.isEmpty()) {
+            titleText.setError("Title is required");
+        } else {
+            category.title = title;
+            category.description = descriptionText.getText().toString();
+            category.save();
+            listener.onEditDone();
+        }
+
     }
 }
