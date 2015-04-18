@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
@@ -97,10 +98,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            for (Activity activity : category.activities()) {
-                                activity.delete();
+                            ActiveAndroid.beginTransaction();
+                            try {
+                                for (Activity activity : category.activities()) {
+                                    activity.delete();
+                                }
+                                category.delete();
+                                ActiveAndroid.setTransactionSuccessful();
+                            } finally {
+                                ActiveAndroid.endTransaction();
                             }
-                            category.delete();
                             adapter.getCategories().remove(category);
                             adapter.notifyDataSetChanged();
                         }
