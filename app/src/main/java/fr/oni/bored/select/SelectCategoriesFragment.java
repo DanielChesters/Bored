@@ -13,13 +13,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.oni.bored.BaseFragment;
 import fr.oni.bored.R;
+import fr.oni.bored.model.Activity;
 import fr.oni.bored.model.Category;
 import fr.oni.bored.select.adapter.CategoryAdapter;
 import fr.oni.bored.util.UiUtils;
@@ -47,10 +50,11 @@ public class SelectCategoriesFragment extends BaseFragment {
 
     @InjectView(R.id.select_categories_buttons)
     protected View buttonsView;
-
+    protected ValueAnimator buttonsViewAnimator;
+    protected int nbActivities = 0;
+    protected List<Activity> activities = new ArrayList<>();
     @Arg
     ArrayList<Category> categories;
-
     Map<Category, Boolean> selectedCategories;
 
     private CategoryAdapter adapter;
@@ -58,7 +62,6 @@ public class SelectCategoriesFragment extends BaseFragment {
     private boolean allSelected = false;
 
     private boolean animationInProgress = false;
-    private ValueAnimator buttonsViewAnimator;
 
     public SelectCategoriesFragment() {
     }
@@ -174,14 +177,38 @@ public class SelectCategoriesFragment extends BaseFragment {
 
     @OnClick(R.id.select_categories_random_button)
     public void randomizeActivities() {
-        List<fr.oni.bored.model.Activity> activities = new ArrayList<>();
+        activities.clear();
         for (Map.Entry<Category, Boolean> category : selectedCategories.entrySet()) {
             if (category.getValue()) {
                 activities.addAll(category.getKey().activities());
             }
         }
-        Collections.shuffle(activities);
-        listener.onRandomizeActivities(activities.subList(0, 5));
+        final NumberPicker numberPicker = new NumberPicker(getActivity());
+        numberPicker.setMaxValue(20);
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.select_number_actitivities_dialog_title)
+                .customView(numberPicker, false)
+                .negativeText(android.R.string.cancel)
+                .positiveText(android.R.string.ok)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        nbActivities = numberPicker.getValue();
+                        if (activities.size() > nbActivities) {
+                            Collections.shuffle(activities);
+                            listener.onRandomizeActivities(activities.subList(0, nbActivities));
+                        } else {
+                            Toast.makeText(getActivity(),
+                                    R.string.select_number_actitvities_dialog_not_enough_text,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
 }

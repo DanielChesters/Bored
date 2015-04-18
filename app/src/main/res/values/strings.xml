@@ -10,4 +10,6 @@
     <string name="delete_category_dialog_content">Do you really want to remove this category and this associates activities?</string>
     <string name="delete_activity_dialog_title">Remove this activity?</string>
     <string name="delete_activity_dialog_content">Do you really want to remove this activity?</string>
+    <string name="select_number_actitivities_dialog_title">Choose how witch activities you want</string>
+    <string name="select_number_actitvities_dialog_not_enough_text">You doesn\'t select enough activities</string>
 </resources>
