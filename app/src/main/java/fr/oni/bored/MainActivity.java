@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
     }
 
     @Override
-    public void onRandomizeActivities(Set<Activity> activities) {
+    public void onRandomizeActivities(List<Activity> activities) {
         goToFragment(new SelectActivitiesFragmentBuilder(new ArrayList<>(activities)).build());
     }
 }

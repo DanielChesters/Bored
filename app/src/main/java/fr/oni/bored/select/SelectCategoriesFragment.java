@@ -181,7 +181,7 @@ public class SelectCategoriesFragment extends BaseFragment {
             }
         }
         Collections.shuffle(activities);
-        listener.onRandomizeActivities(new HashSet<>(activities.subList(0, 5)));
+        listener.onRandomizeActivities(activities.subList(0, 5));
     }
 
 }

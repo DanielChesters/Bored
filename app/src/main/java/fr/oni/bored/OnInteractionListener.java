@@ -1,5 +1,6 @@
 package fr.oni.bored;
 
+import java.util.List;
 import java.util.Set;
 
 import fr.oni.bored.model.Activity;
@@ -18,7 +19,7 @@ public interface OnInteractionListener {
 
     void onViewActivity(fr.oni.bored.model.Activity activity);
 
-    void onRandomizeActivities(Set<Activity> activities);
+    void onRandomizeActivities(List<Activity> activities);
 
     void onEditDone();
 }
