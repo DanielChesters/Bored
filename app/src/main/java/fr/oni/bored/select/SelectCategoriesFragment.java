@@ -162,10 +162,10 @@ public class SelectCategoriesFragment extends BaseFragment {
         }
         allSelected = !allSelected;
         if (allSelected) {
-            Bitmap undoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_undo_black_36dp);
+            Bitmap undoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_undo_black_24dp);
             selectAllCategoriesButton.setImageBitmap(undoBitmap);
         } else {
-            Bitmap doneAllBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_all_black_36dp);
+            Bitmap doneAllBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_all_black_24dp);
             selectAllCategoriesButton.setImageBitmap(doneAllBitmap);
         }
 
