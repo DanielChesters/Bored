@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
     }
 
     private void goToRandomize() {
-        ArrayList<Category> categories = new ArrayList<>(Category.loadAll());
+        ArrayList<Category> categories = getCategories();
         goToFragment(new SelectCategoriesFragmentBuilder(categories).build());
     }
 
