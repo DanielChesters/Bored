@@ -1,5 +1,6 @@
 package fr.oni.bored;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.IdRes;
@@ -13,7 +14,6 @@ import com.activeandroid.ActiveAndroid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import fr.oni.bored.edit.EditActivityFragmentBuilder;
 import fr.oni.bored.edit.EditCategoryFragmentBuilder;
@@ -28,6 +28,8 @@ import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 
 public class MainActivity extends ActionBarActivity implements OnInteractionListener {
 
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(this.getClass().getName(), "onCreate begin");
@@ -38,7 +40,12 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
         ActiveAndroid.initialize(this);
-        createSampleCategories();
+        preferences = getPreferences(MODE_PRIVATE);
+        boolean firstRun = preferences.getBoolean("firstRun", true);
+        if (firstRun) {
+            createSampleData();
+        }
+
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -71,19 +78,26 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
         return new ArrayList<>(categories);
     }
 
-    private void createSampleCategories() {
-        Category category1 = new Category("Category 1", "Description 1");
-        Category category2 = new Category("Category 2", "Description 2");
-        category1.save();
-        category2.save();
-        Activity activity1 = new Activity("Activity 1", "Description 1", category1);
-        Activity activity2 = new Activity("Activity 2", "Description 2", category1);
-        Activity activity3 = new Activity("Activity 3", "Description 3", category2);
-        Activity activity4 = new Activity("Activity 4", "Description 4", category2);
-        activity1.save();
-        activity2.save();
-        activity3.save();
-        activity4.save();
+    private void createSampleData() {
+        ActiveAndroid.beginTransaction();
+        try {
+            Category category1 = new Category("Category 1", "Description 1");
+            Category category2 = new Category("Category 2", "Description 2");
+            category1.save();
+            category2.save();
+            Activity activity1 = new Activity("Activity 1", "Description 1", category1);
+            Activity activity2 = new Activity("Activity 2", "Description 2", category1);
+            Activity activity3 = new Activity("Activity 3", "Description 3", category2);
+            Activity activity4 = new Activity("Activity 4", "Description 4", category2);
+            activity1.save();
+            activity2.save();
+            activity3.save();
+            activity4.save();
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
+        preferences.edit().putBoolean("firstRun", false).apply();
     }
 
 
