@@ -2,6 +2,8 @@ package fr.oni.bored.select;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -159,6 +161,14 @@ public class SelectCategoriesFragment extends BaseFragment {
             selectedCategories.put(category, !allSelected);
         }
         allSelected = !allSelected;
+        if (allSelected) {
+            Bitmap undoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_undo_black_36dp);
+            selectAllCategoriesButton.setImageBitmap(undoBitmap);
+        } else {
+            Bitmap doneAllBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_all_black_36dp);
+            selectAllCategoriesButton.setImageBitmap(doneAllBitmap);
+        }
+
         adapter.notifyDataSetChanged();
     }
 
