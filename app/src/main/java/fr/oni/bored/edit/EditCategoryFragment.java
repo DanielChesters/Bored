@@ -49,7 +49,7 @@ public class EditCategoryFragment extends BaseFragment {
         }
         final String title = titleText.getText().toString();
         if (title.isEmpty()) {
-            titleText.setError("Title is required");
+            titleText.setError(getActivity().getString(R.string.title_required_error));
         } else {
             category.title = title;
             category.description = descriptionText.getText().toString();

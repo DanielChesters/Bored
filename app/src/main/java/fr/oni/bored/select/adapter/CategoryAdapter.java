@@ -102,10 +102,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         @OnClick(R.id.select_category_row_delete_button)
         public void deleteCategory() {
             new MaterialDialog.Builder(context)
-                    .title("Remove this category?")
-                    .content("Do you really want to remove this category?")
-                    .positiveText("Ok")
-                    .negativeText("Cancel")
+                    .title(R.string.detele_category_dialog_title)
+                    .content(R.string.delete_category_dialog_content)
+                    .positiveText(R.string.ok_string)
+                    .negativeText(R.string.cancel_string)
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {

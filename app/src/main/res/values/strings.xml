@@ -6,4 +6,11 @@
     <string name="edit_category_title_hint">Title</string>
     <string name="edit_category_description_hint">Description</string>
     <string name="action_randomize">Randomize Activities</string>
+    <string name="title_required_error">Title is required</string>
+    <string name="detele_category_dialog_title">Remove this category?</string>
+    <string name="delete_category_dialog_content">Do you really want to remove this category?</string>
+    <string name="ok_string">Ok</string>
+    <string name="cancel_string">Cancel</string>
+    <string name="delete_activity_dialog_title">Remove this activity?</string>
+    <string name="delete_activity_dialog_content">Do you really want to remove this activity?</string>
 </resources>

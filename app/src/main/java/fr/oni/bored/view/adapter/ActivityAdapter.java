@@ -89,10 +89,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
         @OnClick(R.id.view_activity_row_delete_button)
         public void deleteActivity() {
             new MaterialDialog.Builder(context)
-                    .title("Remove this activity?")
-                    .content("Do you really want to remove this activity?")
-                    .positiveText("Ok")
-                    .negativeText("Cancel")
+                    .title(R.string.delete_activity_dialog_title)
+                    .content(R.string.delete_activity_dialog_content)
+                    .positiveText(R.string.ok_string)
+                    .negativeText(R.string.cancel_string)
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
