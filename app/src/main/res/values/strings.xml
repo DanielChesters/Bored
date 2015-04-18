@@ -7,7 +7,7 @@
     <string name="action_randomize">Randomize Activities</string>
     <string name="title_required_error">Title is required</string>
     <string name="detele_category_dialog_title">Remove this category?</string>
-    <string name="delete_category_dialog_content">Do you really want to remove this category?</string>
+    <string name="delete_category_dialog_content">Do you really want to remove this category and this associates activities?</string>
     <string name="delete_activity_dialog_title">Remove this activity?</string>
     <string name="delete_activity_dialog_content">Do you really want to remove this activity?</string>
 </resources>

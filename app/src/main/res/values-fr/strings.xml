@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bored</string>
+    <string name="edit_category_title_hint">Titre</string>
+    <string name="title_required_error">Un titre est requis </string>
+    <string name="edit_category">Édition</string>
+    <string name="edit_category_description_hint">Description</string>
+    <string name="delete_category">Supprimer</string>
+    <string name="detele_category_dialog_title">Supprimer cette catégorie ?</string>
+    <string name="delete_category_dialog_content">Voulez-vous vraiment supprimer cette catégorie et les activités qui y sont associées ?</string>
+    <string name="delete_activity_dialog_title">Supprimer cette activité ?</string>
+    <string name="delete_activity_dialog_content">Voulez-vous vraiment supprimer cette activité ?</string>
+    <string name="action_randomize">Activités aléatoires</string>
+</resources>
