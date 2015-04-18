@@ -42,6 +42,9 @@ public class DatabaseTest {
     @SmallTest
     public void insertAnActivity() {
         Activity activity = TestUtils.createActivity(1);
+        final Category category = TestUtils.createCategory(1);
+        category.save();
+        activity.category = category;
         activity.save();
         Activity activityResult = Activity.load(activity.getId());
         TestUtils.compareActivity(activity, activityResult);
@@ -60,6 +63,9 @@ public class DatabaseTest {
     @SmallTest
     public void updateAnActivity() {
         Activity activity = TestUtils.createActivity(1);
+        final Category category = TestUtils.createCategory(1);
+        category.save();
+        activity.category = category;
         activity.save();
         activity.description = "Nope";
         activity.save();

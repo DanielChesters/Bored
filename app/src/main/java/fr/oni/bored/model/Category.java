@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "Categories")
 @ParcelablePlease
 public class Category extends Model implements Parcelable {
-    @Column(name = "Title")
+    @Column(name = "Title", notNull = true)
     public String title;
     @Column(name = "Description")
     public String description;

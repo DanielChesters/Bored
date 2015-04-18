@@ -11,11 +11,11 @@ import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 @Table(name = "Activities")
 @ParcelablePlease
 public class Activity extends Model implements Parcelable {
-    @Column(name = "Title")
+    @Column(name = "Title", notNull = true)
     public String title;
     @Column(name = "Description")
     public String description;
-    @Column(name = "Category")
+    @Column(name = "Category", notNull = true)
     public Category category;
 
     public static final Creator<Activity> CREATOR = new Creator<Activity>() {
