@@ -36,8 +36,7 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+            StrictMode.enableDefaults();
         }
         ActiveAndroid.initialize(this);
         preferences = getPreferences(MODE_PRIVATE);
