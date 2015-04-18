@@ -58,12 +58,6 @@ public class EditActivityFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
     @OnClick(R.id.edit_activity_done)
     public void saveActivity() {
         if (activity == null) {

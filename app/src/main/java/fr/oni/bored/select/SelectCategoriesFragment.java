@@ -151,12 +151,6 @@ public class SelectCategoriesFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
     @OnClick(R.id.select_categories_select_all_button)
     public void selectAllCategories() {
         selectedCategories.clear();

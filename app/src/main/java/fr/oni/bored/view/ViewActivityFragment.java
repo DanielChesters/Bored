@@ -38,12 +38,6 @@ public class ViewActivityFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
     @OnClick(R.id.view_activity_edit_button)
     public void editActivity() {
         listener.onEditActivity(activity);

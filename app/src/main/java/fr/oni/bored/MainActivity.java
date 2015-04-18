@@ -45,7 +45,6 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
             createSampleData();
         }
 
-
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             ArrayList<Category> categories = getCategories();

@@ -24,4 +24,10 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
 }
