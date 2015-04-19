@@ -11,4 +11,6 @@
     <string name="delete_activity_dialog_title">Supprimer cette activité ?</string>
     <string name="delete_activity_dialog_content">Voulez-vous vraiment supprimer cette activité ?</string>
     <string name="action_randomize">Activités aléatoires</string>
+    <string name="select_number_actitivities_dialog_title">Choissez combien d\'activité vous voullez</string>
+    <string name="select_number_actitvities_dialog_not_enough_text">Vous n\'avez pas selectionné assez d\'activité</string>
 </resources>
