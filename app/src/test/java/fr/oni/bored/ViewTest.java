@@ -6,6 +6,9 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +32,11 @@ public class ViewTest {
     @Before
     public void setUp() {
         activity = Robolectric.setupActivity(MainActivity.class);
+    }
+
+    @After
+    public void end() {
+        ActiveAndroid.dispose();
     }
 
     @Test
