@@ -2,9 +2,11 @@ package fr.oni.bored.select;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -87,7 +88,7 @@ public class SelectCategoriesFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -179,14 +180,12 @@ public class SelectCategoriesFragment extends BaseFragment {
         }
         final NumberPicker numberPicker = new NumberPicker(getActivity());
         numberPicker.setMaxValue(20);
-        new MaterialDialog.Builder(getActivity())
-                .title(R.string.select_number_actitivities_dialog_title)
-                .customView(numberPicker, false)
-                .negativeText(android.R.string.cancel)
-                .positiveText(android.R.string.ok)
-                .callback(new MaterialDialog.ButtonCallback() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.select_number_actitivities_dialog_title)
+                .setView(numberPicker)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
+                    public void onClick(DialogInterface dialog, int which) {
                         nbActivities = numberPicker.getValue();
                         if (activities.size() > nbActivities) {
                             Collections.shuffle(activities);
@@ -197,12 +196,12 @@ public class SelectCategoriesFragment extends BaseFragment {
                                     Toast.LENGTH_LONG).show();
                         }
                     }
-
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dialog.dismiss();
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                     }
                 }).show();
     }
-
 }

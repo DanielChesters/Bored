@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.rengwuxian.materialedittext.validation.RegexpValidator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -18,10 +17,10 @@ import fr.oni.bored.model.Category;
 
 public class EditCategoryFragment extends BaseFragment {
     @InjectView(R.id.edit_category_title)
-    protected MaterialEditText titleText;
+    protected EditText titleText;
 
     @InjectView(R.id.edit_category_description)
-    protected MaterialEditText descriptionText;
+    protected EditText descriptionText;
 
     @Arg(required = false)
     Category category;

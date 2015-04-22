@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
 
@@ -21,10 +21,10 @@ import fr.oni.bored.model.Category;
 
 public class EditActivityFragment extends BaseFragment {
     @InjectView(R.id.edit_activity_title)
-    protected MaterialEditText titleText;
+    protected EditText titleText;
 
     @InjectView(R.id.edit_activity_description)
-    protected MaterialEditText descriptionText;
+    protected EditText descriptionText;
 
     @InjectView(R.id.edit_activity_category)
     protected Spinner categorySpinner;

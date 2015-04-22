@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +26,7 @@ import fr.oni.bored.view.ViewActivityFragmentBuilder;
 import fr.oni.bored.view.ViewCategoriesFragmentBuilder;
 
 
-public class MainActivity extends ActionBarActivity implements OnInteractionListener {
+public class MainActivity extends AppCompatActivity implements OnInteractionListener {
 
     private SharedPreferences preferences;
 
@@ -123,6 +123,12 @@ public class MainActivity extends ActionBarActivity implements OnInteractionList
     private void goToRandomize() {
         ArrayList<Category> categories = getCategories();
         goToFragment(new SelectCategoriesFragmentBuilder(categories).build());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActiveAndroid.dispose();
     }
 
     @Override

@@ -1,8 +1,9 @@
 package fr.oni.bored.select.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
 import java.util.Map;
@@ -102,35 +102,32 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         @OnClick(R.id.select_category_row_delete_button)
         public void deleteCategory() {
-            new MaterialDialog.Builder(context)
-                    .title(R.string.detele_category_dialog_title)
-                    .content(R.string.delete_category_dialog_content)
-                    .positiveText(android.R.string.ok)
-                    .negativeText(android.R.string.cancel)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            ActiveAndroid.beginTransaction();
-                            try {
-                                for (Activity activity : category.activities()) {
-                                    activity.delete();
-                                }
-                                category.delete();
-                                ActiveAndroid.setTransactionSuccessful();
-                            } finally {
-                                ActiveAndroid.endTransaction();
+            new AlertDialog.Builder(context)
+                .setTitle(R.string.detele_category_dialog_title)
+                .setMessage(R.string.delete_activity_dialog_content)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            for (Activity activity : category.activities()) {
+                                activity.delete();
                             }
-                            adapter.categories.remove(category);
-                            adapter.selectedCategories.remove(category);
-                            adapter.notifyDataSetChanged();
+                            category.delete();
+                            ActiveAndroid.setTransactionSuccessful();
+                        } finally {
+                            ActiveAndroid.endTransaction();
                         }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            Log.i(CategoryAdapter.class.getName(), "Remove canceled");
-                            dialog.dismiss();
-                        }
-                    }).show();
+                        adapter.categories.remove(category);
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
         }
 
         public TextView getTitleView() {

@@ -1,15 +1,14 @@
 package fr.oni.bored.view.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
 
@@ -88,23 +87,21 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
         @OnClick(R.id.view_activity_row_delete_button)
         public void deleteActivity() {
-            new MaterialDialog.Builder(context)
-                    .title(R.string.delete_activity_dialog_title)
-                    .content(R.string.delete_activity_dialog_content)
-                    .positiveText(android.R.string.ok)
-                    .negativeText(android.R.string.cancel)
-                    .callback(new MaterialDialog.ButtonCallback() {
+            new AlertDialog.Builder(context)
+                    .setTitle(R.string.delete_activity_dialog_title)
+                    .setMessage(R.string.delete_activity_dialog_content)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onPositive(MaterialDialog dialog) {
+                        public void onClick(DialogInterface dialog, int which) {
                             activity.delete();
                             adapter.getActivities().remove(activity);
                             adapter.notifyDataSetChanged();
                         }
-
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            Log.i(CategoryAdapter.class.getName(), "Remove canceled");
-                            dialog.dismiss();
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
                         }
                     }).show();
         }
