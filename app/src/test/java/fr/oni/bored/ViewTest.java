@@ -36,7 +36,7 @@ public class ViewTest {
 
     @After
     public void end() {
-        ActiveAndroid.dispose();
+        activity.onDestroy();
     }
 
     @Test
