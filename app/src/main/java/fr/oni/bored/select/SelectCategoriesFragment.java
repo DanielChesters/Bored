@@ -179,6 +179,7 @@ public class SelectCategoriesFragment extends BaseFragment {
             }
         }
         final NumberPicker numberPicker = new NumberPicker(getActivity());
+        numberPicker.setMinValue(1);
         numberPicker.setMaxValue(20);
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.select_number_actitivities_dialog_title)
