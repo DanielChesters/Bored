@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnInteractionList
 
     @Override
     public void onCreateActivity(Category category) {
-        goToFragment(new EditActivityFragmentBuilder().build());
+        goToFragment(new EditActivityFragmentBuilder().category(category).build());
     }
 
     @Override
