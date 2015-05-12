@@ -83,6 +83,7 @@ public class SelectCategoriesFragment extends BaseFragment {
         for (Category category : categories) {
             selectedCategories.put(category, false);
         }
+        allSelected = false;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         adapter = new CategoryAdapter(categories, listener, selectedCategories);
         recyclerView.setAdapter(adapter);
