@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnInteractionList
     protected void onDestroy() {
         super.onDestroy();
         ActiveAndroid.dispose();
+        BoredApplication.getRefWatcher(this).watch(this);
     }
 
     @Override
